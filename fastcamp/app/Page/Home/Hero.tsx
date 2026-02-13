@@ -166,46 +166,128 @@ const Hero = () => {
           <div className="relative z-10 text-black text-2xl font-bold pl-75 mt-50">
             <h1>กิจกรรมยอดนิยม</h1>
           </div>
-          {/* เนื้อหา */}
+
           <div className="relative z-10 flex justify-center items-center gap-5 mt-10">
-            <div className="bg-pink-500 h-120 w-175 rounded-4xl relative">
-              <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
-              <div>
-                <div className="bg-white/50 h-8 w-75 rounded-xl">
-                  <h1 className="text-[#BACCE1] font-bold ">เสวนา/สัมนา/ทอล์คโชว์</h1>
+            {/* box ทางด้านซ้าย */}
+            <div className="bg-gray-700 h-120 w-175 rounded-4xl relative">
+              {/* icon มุมขวาบน */}
+              <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover"/>
+              {/* กล่อง text ล่างซ้าย */}
+              <div className="absolute bottom-6 left-6 space-y-3">
+                <div className="bg-white/50 h-8 w-75 rounded-xl flex items-center px-3">
+                  <h1 className="text-[#BACCE1] font-bold text-sm">เสวนา/สัมนา/ทอล์คโชว์</h1>
                 </div>
 
                 <h1 className="font-semibold text-[#BACCE1]">DIT Hackathon 2025 : Unlock Your Future Skill</h1>
 
                 <div className="flex space-x-10">
-                  <div className="flex gap-2">
-                    <Image src="/Calendar.png" alt="Calendar" width="24" height="24" className="rounded-full object-cover" />
-                    <h1 className="font-bold text-[#BACCE1]">1 JANUARY,2026</h1>
+                  <div className="flex gap-2 items-center">
+                    <Image src="/Calendar.png" alt="Calendar" width="24" height="24" />
+                    <h1 className="font-bold text-[#BACCE1]">1 JANUARY, 2026</h1>
                   </div>
-                  <div className="flex gap-2">
-                    <Image src="/Star.png" alt="Star" width="24" height="24" className="rounded-full object-cover" />
-                    <h1 className="font-bold text-[#BACCE1]">1 JANUARY,2026</h1>
+
+                  <div className="flex gap-2 items-center">
+                    <Image src="/Star.png" alt="Star" width="24" height="24" />
+                    <h1 className="font-bold text-[#BACCE1]">5.0 Review</h1>
                   </div>
                 </div>
               </div>
             </div>
-
             <div className="flex gap-5">
+              {/* 4 box ทางด้านขา */}
               <div>
-                <div className="bg-pink-500 h-60 w-87 rounded-4xl mb-5 relative">
+                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
                   <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
+                  <div className="absolute bottom-6 left-6 space-y-1">
+                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
+                      <h1 className="text-[#BACCE1] font-bold text-sm">พัฒนาการ/เวิร์กชอป</h1>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#BACCE1]">GTC : Build Your Own AI #3</p>
+
+                    <div className="flex space-x-10">
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">1 JANUARY, 2026</h1>
+                      </div>
+
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Star.png" alt="Star" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">4.6 Review</h1>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="bg-pink-500 h-60 w-87 rounded-4xl relative">
+                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
                   <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
+                  <div className="absolute bottom-6 left-6 space-y-1">
+                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
+                      <h1 className="text-[#BACCE1] font-bold text-sm">นิทรรศการ/เปิดบ้าน</h1>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#BACCE1]">IT Ladkrabang Open House 2025</p>
+
+                    <div className="flex space-x-10">
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">14 FEBRUARY, 2026</h1>
+                      </div>
+
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Star.png" alt="Star" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">4.8 Review</h1>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
               <div>
-                <div className="bg-pink-500 h-60 w-87 rounded-4xl mb-5 relative">
+                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
                   <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
+                  <div className="absolute bottom-6 left-6 space-y-1">
+                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
+                      <h1 className="text-[#BACCE1] font-bold text-sm">แนะแนวคณะ/อาชีพ</h1>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#BACCE1]">Extreme Game Development Camp</p>
+
+                    <div className="flex space-x-10">
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">15 MARCH, 2026</h1>
+                      </div>
+
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Star.png" alt="Star" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">4.9 Review</h1>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-pink-500 h-60 w-87 rounded-4xl relative">
+
+                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
                   <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
+                  <div className="absolute bottom-6 left-6 space-y-1">
+                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
+                      <h1 className="text-[#BACCE1] font-bold text-sm">กิจกรรมออนไลน์</h1>
+                    </div>
+
+                    <p className="text-sm font-semibold text-[#BACCE1]">ComCamp 35 ค่ายวิศวะคอมพิวเตอร์ มจธ.</p>
+
+                    <div className="flex space-x-10">
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">28 MARCH, 2026</h1>
+                      </div>
+
+                      <div className="flex gap-2 items-center">
+                        <Image src="/Star.png" alt="Star" width="18" height="18" />
+                        <h1 className="text-sm font-bold text-[#BACCE1]">4.3 Review</h1>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
