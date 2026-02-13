@@ -11,7 +11,10 @@ jobs:
     steps:
       - name: Send Discord message
         run: |
+          echo "Webhook length: ${#DISCORD_WEBHOOK}"
           curl -X POST \
           -H "Content-Type: application/json" \
           -d '{"content":"Test message from GitHub Actions"}' \
-          "${{ secrets.DISCORD_WEBHOOK }}"
+          "$DISCORD_WEBHOOK"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
