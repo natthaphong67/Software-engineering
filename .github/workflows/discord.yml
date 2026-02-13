@@ -13,6 +13,7 @@ jobs:
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
-          curl -H "Content-Type: application/json" \
-          -d '{"content":"🚀 มี push ใหม่เข้า main branch แล้ว!"}' \
-          $DISCORD_WEBHOOK
+          curl -X POST \
+          -H "Content-Type: application/json" \
+          -d '{"content":"New push to main branch"}' \
+          "$DISCORD_WEBHOOK"
