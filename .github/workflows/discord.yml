@@ -10,10 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Discord message
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
         run: |
           curl -X POST \
           -H "Content-Type: application/json" \
-          -d '{"content":"New push to main branch"}' \
-          "$DISCORD_WEBHOOK"
+          -d '{"content":"Test message from GitHub Actions"}' \
+          "${{ secrets.DISCORD_WEBHOOK }}"
