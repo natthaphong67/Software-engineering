@@ -284,7 +284,7 @@ const Hero = () => {
 
                       <div className="flex gap-2 items-center">
                         <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">4.3 Review</h1>
+                        <p className="text-sm font-bold text-[#BACCE1]">4.3 Review</p>
                       </div>
                     </div>
                   </div>
