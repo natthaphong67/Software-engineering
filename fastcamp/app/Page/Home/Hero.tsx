@@ -38,7 +38,7 @@ const Hero = () => {
 
 
       {/* WHITE SECTION */}
-      <div className="bg-white min-h-screen mt-90 justify-center">
+      <div className="bg-white min-h-screen mt-90 justify-center items-center">
         <div className="flex gap-8 p-2 pl-25">
           {/*BOX นิทรรศการ/เปิดบ้าน */}
           <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383] p-5 shadow-xl items-center justify-center">
@@ -161,11 +161,9 @@ const Hero = () => {
           </div>
         </div>
         {/* กิจกรรมยอดนิยม */}
-        <div className="relative">
+        <div className="relative items-center justify-center">
           {/* ข้อความ */}
-          <div className="relative z-10 text-black text-2xl font-bold pl-75 mt-50">
-            <h1>กิจกรรมยอดนิยม</h1>
-          </div>
+          <div className="relative z-10 text-black text-2xl font-bold pl-75 mt-50"><h1>กิจกรรมยอดนิยม</h1></div>
 
           <div className="relative z-10 flex justify-center items-center gap-5 mt-10">
             {/* box ทางด้านซ้าย */}
@@ -183,12 +181,12 @@ const Hero = () => {
                 <div className="flex space-x-10">
                   <div className="flex gap-2 items-center">
                     <Image src="/Calendar.png" alt="Calendar" width="24" height="24" />
-                    <h1 className="font-bold text-[#BACCE1]">1 JANUARY, 2026</h1>
+                    <h1 className="text-sm font-medium text-[#BACCE1]">1 JANUARY, 2026</h1>
                   </div>
 
                   <div className="flex gap-2 items-center">
                     <Image src="/Star.png" alt="Star" width="24" height="24" />
-                    <h1 className="font-bold text-[#BACCE1]">5.0 Review</h1>
+                    <h1 className="text-sm font-medium text-[#BACCE1]">5.0 Review</h1>
                   </div>
                 </div>
               </div>
@@ -208,12 +206,12 @@ const Hero = () => {
                     <div className="flex space-x-10">
                       <div className="flex gap-2 items-center">
                         <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">1 JANUARY, 2026</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">1 JANUARY, 2026</h1>
                       </div>
 
                       <div className="flex gap-2 items-center">
                         <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">4.6 Review</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">4.6 Review</h1>
                       </div>
                     </div>
                   </div>
@@ -231,12 +229,12 @@ const Hero = () => {
                     <div className="flex space-x-10">
                       <div className="flex gap-2 items-center">
                         <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">14 FEBRUARY, 2026</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">14 FEBRUARY, 2026</h1>
                       </div>
 
                       <div className="flex gap-2 items-center">
                         <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">4.8 Review</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">4.8 Review</h1>
                       </div>
                     </div>
                   </div>
@@ -256,12 +254,12 @@ const Hero = () => {
                     <div className="flex space-x-10">
                       <div className="flex gap-2 items-center">
                         <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">15 MARCH, 2026</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">15 MARCH, 2026</h1>
                       </div>
 
                       <div className="flex gap-2 items-center">
                         <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">4.9 Review</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">4.9 Review</h1>
                       </div>
                     </div>
                   </div>
@@ -279,12 +277,12 @@ const Hero = () => {
                     <div className="flex space-x-10">
                       <div className="flex gap-2 items-center">
                         <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-bold text-[#BACCE1]">28 MARCH, 2026</h1>
+                        <h1 className="text-sm font-medium text-[#BACCE1]">28 MARCH, 2026</h1>
                       </div>
 
                       <div className="flex gap-2 items-center">
                         <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <p className="text-sm font-bold text-[#BACCE1]">4.3 Review</p>
+                        <p className="text-sm font-medium text-[#BACCE1]">4.3 Review</p>
                       </div>
                     </div>
                   </div>
@@ -292,10 +290,153 @@ const Hero = () => {
               </div>
             </div>
           </div>
+          {/* ส่งกิจกรรมขึ้นเว็บ */}
+          <div className="flex items-center">
+            <div className="relative z-10 w-200 h-75 bg-linear-to-r from-[#0b0f2b] to-[#1a2b6f] px-12 bg_clip ml-85 my-25 flex">
+              <div className="flex  mt-15 gap-15">
+                <div className="text-white font-bold text-2xl">
+                  <div className="flex gap-2">
+                    <h1>จุดเริ่มต้นที่ค่ายคุณจะ</h1>
+                    <h1 className="text-3xl">ทะยาน</h1>
+                  </div>
+                  <div><h1>สู่ความสำเร็จบนเว็บเรา</h1></div>
+                </div>
+                <div className="h-12 w-50 border border-white rounded-3xl flex items-center justify-center mt-5">
+                  <h1 className="text-white text-xl font-medium">ส่งกิจกรรมขึ้นเว็บ</h1>
+                </div>
+              </div>
+            </div>
+            <div className="relative w-[40%] h-45 -ml-50 -mt-30 z-0">
+              <Image src="/ส่งกิจกรรม.png" alt="ส่งกิจกรรมขึ้นเว็บ" fill className="object-cover" />
+            </div>
+          </div>
         </div>
-
-        <div className="bg-white min-h-screen mt-90">
+        {/* กิจกรรมล่าสุด */}
+        <div className="bg-white min-h-screen">
+          {/* ข้อความ */}
+          <div className="relative z-10 text-black text-2xl font-bold pl-75 -mt-25"><h1>กิจกรรมล่าสุด</h1></div>
           
+          <div>
+            {/* กิจกรรมที่ 1 */}
+            <div className="flex items-center justify-center gap-10">
+              <div className="h-80 w-160 relative mt-15">
+                <Image src="/Container1.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-5">
+                <div className="bg-[#FF5D4B] flex-col space--5 h-7 w-45 rounded-lg text-white text-sm font-medium flex items-center justify-center"><h1>สิ้นสุดรับสมัครใน 2 วัน</h1></div>
+                <div className="text-3xl font-bold"><h1>AI Innovation Summit 2025</h1></div>
+                  <div className="flex space-x-10">
+                    <div className="flex gap-2 items-center">
+                      <Image src="/calendar-6D757F.png" alt="Calendar" width="18" height="18" />
+                      <h1 className="text-sm font-medium text-[#6D757F]">27 AUGUST, 2024</h1>
+                    </div>
+
+                    <div className="flex gap-2 items-center">
+                      <Image src="/star-6D757F.png" alt="Star" width="18" height="18" />
+                        <p className="text-sm font-medium text-[#6D757F]">5.0 Review</p>
+                    </div>
+                  </div>
+                <div className="text-[#A5A5A5] text-lg">
+                  <h1>มาร่วมเปิดประสบการณ์สุดพิเศษกับงาน AI แห่งปี พบผู้นำระดับโลก นักนวัตกรรม</h1>
+                  <h1>และผู้สร้างอนาคต ในวันที่รวม Keynote, Showcase และแรงบันดาลใจจากโลกจริง ไว้ในที่เดียว</h1>
+                </div>
+                <div className="flex items-center justify-center border-2 border-[#6D757F] h-8 w-30 gap-2 rounded-3xl">
+                  <h1 className="text-sm font-medium text-[#92989F]">READ MORE</h1>
+                  <div className="relative h-4 w-4"><Image src="/arrow-6D757F.png" alt="Arrow Outward" fill className="object-cover" /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* กิจกรรมที่ 2 */}
+            <div className="flex items-center justify-center gap-10">
+              <div className="h-80 w-160 relative mt-15 ml-15">
+                <Image src="/Container2.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-5">
+                <div className="bg-[#FFBD42] flex-col space--5 h-7 w-45 rounded-lg text-white text-sm font-medium flex items-center justify-center"><h1>สิ้นสุดรับสมัครใน 7 วัน</h1></div>
+                <div className="text-3xl font-bold"><h1>Computer Engineering and Data Science</h1></div>
+                  <div className="flex space-x-10">
+                    <div className="flex gap-2 items-center">
+                      <Image src="/calendar-6D757F.png" alt="Calendar" width="18" height="18" />
+                      <h1 className="text-sm font-medium text-[#6D757F]">27 AUGUST, 2024</h1>
+                    </div>
+
+                    <div className="flex gap-2 items-center">
+                      <Image src="/star-6D757F.png" alt="Star" width="18" height="18" />
+                        <p className="text-sm font-medium text-[#6D757F]">4.8 Review</p>
+                    </div>
+                  </div>
+                <div className="text-[#A5A5A5] text-lg">
+                  <h1>เปิดโลก วิศวะคอมและวิทย์คอม ให้เข้าใจง่ายและสนุกผ่านคลาสออนไลน์ 6 ชั่วโมง ที่จะพานักเรียนเรียนรู้ </h1>
+                  <h1>ตั้งแต่การเขียนโปรแกรมสร้างระบบปฏิบัติการอย่างง่าย ไปจนถึงการจัดการและการวิเคราะห์ข้อมูล</h1>
+                </div>
+                <div className="flex items-center justify-center border-2 border-[#6D757F] h-8 w-30 gap-2 rounded-3xl">
+                  <h1 className="text-sm font-medium text-[#92989F]">READ MORE</h1>
+                  <div className="relative h-4 w-4"><Image src="/arrow-6D757F.png" alt="Arrow Outward" fill className="object-cover" /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* กิจกรรมที่ 3 */}
+            <div className="flex items-center justify-center gap-10">
+              <div className="h-80 w-160 relative mt-15 ml-10">
+                <Image src="/Container3.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-5">
+                <div className="bg-[#A1A1A1] flex-col space--5 h-7 w-45 rounded-lg text-white text-sm font-medium flex items-center justify-center"><h1>สิ้นสุดรับสมัครแล้ว</h1></div>
+                <div className="text-3xl font-bold"><h1>AI Innovation Summit 2025</h1></div>
+                  <div className="flex space-x-10">
+                    <div className="flex gap-2 items-center">
+                      <Image src="/calendar-6D757F.png" alt="Calendar" width="18" height="18" />
+                      <h1 className="text-sm font-medium text-[#6D757F]">28 MARCH, 2026</h1>
+                    </div>
+
+                    <div className="flex gap-2 items-center">
+                      <Image src="/star-6D757F.png" alt="Star" width="18" height="18" />
+                        <p className="text-sm font-medium text-[#6D757F]">4.8 Review</p>
+                    </div>
+                  </div>
+                <div className="text-[#A5A5A5] text-lg">
+                  <h1>เรียนรู้พื้นฐานการเขียนโปรแกรม ตั้งแต่โครงสร้างเบื้องต้น การสร้างระบบง่ายๆ ไปจนถึงการประยุกต์ใช้</h1>
+                  <h1>Python ในชีวิตประจำวัน พร้อมสิทธิพิเศษเข้าร่วมแข่งขัน Python Best Mini Project</h1>
+                </div>
+                <div className="flex items-center justify-center border-2 border-[#6D757F] h-8 w-30 gap-2 rounded-3xl">
+                  <h1 className="text-sm font-medium text-[#92989F]">READ MORE</h1>
+                  <div className="relative h-4 w-4"><Image src="/arrow-6D757F.png" alt="Arrow Outward" fill className="object-cover" /></div>
+                </div>
+              </div>
+            </div>
+
+            {/* กิจกรรมที่ 4 */}
+            <div className="flex items-center justify-center gap-10">
+              <div className="h-80 w-160 relative mt-15 ml-15">
+                <Image src="/Container4.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl" />
+              </div>
+              <div className="flex flex-col space-y-5">
+                <div className="bg-[#A1A1A1] flex-col space--5 h-7 w-45 rounded-lg text-white text-sm font-medium flex items-center justify-center"><h1>สิ้นสุดรับสมัครแล้ว</h1></div>
+                <div className="text-3xl font-bold"><h1>CE Camp Mahidol</h1></div>
+                  <div className="flex space-x-10">
+                    <div className="flex gap-2 items-center">
+                      <Image src="/calendar-6D757F.png" alt="Calendar" width="18" height="18" />
+                      <h1 className="text-sm font-medium text-[#6D757F]">28 MARCH, 2026</h1>
+                    </div>
+
+                    <div className="flex gap-2 items-center">
+                      <Image src="/star-6D757F.png" alt="Star" width="18" height="18" />
+                        <p className="text-sm font-medium text-[#6D757F]">4.3 Review</p>
+                    </div>
+                  </div>
+                <div className="text-[#A5A5A5] text-lg">
+                  <h1>เปิดโลก วิศวะคอมและวิทย์คอม ให้เข้าใจง่ายและสนุกผ่านคลาสออนไลน์ 6 ชั่วโมง ที่จะพานักเรียนเรียนรู้</h1>
+                  <h1>ตั้งแต่การเขียนโปรแกรมสร้างระบบปฏิบัติการอย่างง่าย ไปจนถึงการจัดการและการวิเคราะห์ข้อมูล</h1>
+                </div>
+                <div className="flex items-center justify-center border-2 border-[#6D757F] h-8 w-30 gap-2 rounded-3xl">
+                  <h1 className="text-sm font-medium text-[#92989F]">READ MORE</h1>
+                  <div className="relative h-4 w-4"><Image src="/arrow-6D757F.png" alt="Arrow Outward" fill className="object-cover" /></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
