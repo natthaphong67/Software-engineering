@@ -437,6 +437,20 @@ const Hero = () => {
               </div>
             </div>
           </div>
+          {/* review */}
+          <div className="bg-[#000523] min-h-screen">
+            <div className="relative bg-white h-20">
+              <svg viewBox="0 0 1200 320" preserveAspectRatio="none" className="absolute bottom-25 translate-y-90 w-full h-65">
+                <path fill="white" transform="scale(1,-1) translate(0,-320)" d="M 1 62 C 19 235 465 82 475 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
+              </svg>
+            </div>
+
+            <div className="items-center justify-center mt-90">
+              <div className="h-12 w-20 mt-30 border-2 border-[##453183]">
+                <h1>Wall of love</h1>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
