@@ -438,19 +438,123 @@ const Hero = () => {
             </div>
           </div>
           {/* review */}
-          <div className="bg-[#000523] min-h-screen">
-            <div className="relative bg-white h-20">
-              <svg viewBox="0 0 1200 320" preserveAspectRatio="none" className="absolute bottom-25 translate-y-90 w-full h-65">
-                <path fill="white" transform="scale(1,-1) translate(0,-320)" d="M 1 62 C 19 235 465 82 475 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
+          <div className="bg-[#000523] min-h-screen mt-5 justify-center items-center">
+            {/* wave */}
+            <div className="relative bg-[white]">
+              <svg viewBox="0 0 1200 320" preserveAspectRatio="none" className="absolute  w-full h-50">
+                <path fill="white" transform="scale(1,-1) translate(0,-320)" d="M 1 62 C 19 235 347 54 475 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
               </svg>
             </div>
+            {/* Image */}
+            <div className="relative h-120 w-240 items-center justify-center ml-135 ">
+              <Image src="/Section.png" alt="Section" fill className="object-cover mt-60 "/>
+            </div>
+            {/* Box review top*/}
+            <div className="flex items-center justify-center space-x-15 mt-15">
+              {/* Box review 1 */}
+              <div className="bg-linear-to-r from-white/0 to-white/15 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
+              {/* Box review 2 */}
+              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
+              {/* Box review 3 */}
+              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
+              {/* Box review 4 */}
+              <div className="bg-linear-to-r from-white/15 to-white/0 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
+            </div>
+            {/* Box review low*/}
+            <div className="flex items-center justify-center space-x-15 mt-10">
+              {/* Box review 1 */}
+              <div className="bg-linear-to-r from-white/0 to-white/15 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
 
-            <div className="items-center justify-center mt-90">
-              <div className="h-12 w-20 mt-30 border-2 border-[##453183]">
-                <h1>Wall of love</h1>
+              {/* Box review 2 */}
+              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
+              </div>
+
+              {/* Box review 3 */}
+              <div className="bg-linear-to-r from-white/15 to-white/0 h-60 w-100 rounded-2xl p-6 text-white">
+                <div className="flex items-center gap-4 mb-4">
+                  <Image src="/Profile.png" alt="Profile" height="48" width="48" className="rounded-full object-cover"/>
+                  <div>
+                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
+                    <p className="text-sm opacity-70">@linuz90</p>
+                  </div>
+                </div>
+                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
               </div>
             </div>
           </div>
+          {/* Box review 3 */}
+          <div className="bg-[#000523] min-h-screen flex items-center justify-center">
+            <div className="flex flex-col items-center text-center gap-6">
+              <div className="text-6xl md:text-7xl font-extrabold tracking-tight flex">
+                <h1 className="bg-linear-to-b from-white to-white/40 bg-clip-text text-transparent">Fastcamp</h1>
+                <h1 className="text-white/90">ให้อะไรกับคุณ ?</h1>
+              </div>
+              <div>
+                <h1 className="text-white/50 text-lg">แชร์ประสบการณ์ของคุณหลังเข้าค่าย/ร่วมงานกับ Fastcamp</h1>
+              </div>
+              <div className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-3 w-105 max-w-full">
+                <input type="text" placeholder="Enter your comment" className="bg-transparent flex-1 outline-none text-white placeholder-white/40"/>
+                <button className="bg-white/20 hover:bg-white/30 transition px-6 py-2 rounded-full text-white font-medium">Submit</button>
+              </div>
+              <div>
+                <h1 className="text-white/40 text-sm">โปรดล็อกอินก่อนแสดงความคิดเห็น</h1>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
