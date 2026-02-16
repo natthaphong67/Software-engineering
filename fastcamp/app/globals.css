@@ -5,3 +5,11 @@
     clip-path: polygon(0 0, 100% 0, 80% 61%, 0 61%);
   }
 }
+
+.bg-search {
+  background-image: url("/HomepageBG_CommentBG.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  
+}

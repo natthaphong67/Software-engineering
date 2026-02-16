@@ -167,125 +167,28 @@ const Hero = () => {
 
           <div className="relative z-10 flex justify-center items-center gap-5 mt-10">
             {/* box ทางด้านซ้าย */}
-            <div className="bg-gray-700 h-120 w-175 rounded-4xl relative">
-              {/* icon มุมขวาบน */}
-              <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover"/>
-              {/* กล่อง text ล่างซ้าย */}
-              <div className="absolute bottom-6 left-6 space-y-3">
-                <div className="bg-white/50 h-8 w-75 rounded-xl flex items-center px-3">
-                  <h1 className="text-[#BACCE1] font-bold text-sm">เสวนา/สัมนา/ทอล์คโชว์</h1>
-                </div>
-
-                <h1 className="font-semibold text-[#BACCE1]">DIT Hackathon 2025 : Unlock Your Future Skill</h1>
-
-                <div className="flex space-x-10">
-                  <div className="flex gap-2 items-center">
-                    <Image src="/Calendar.png" alt="Calendar" width="24" height="24" />
-                    <h1 className="text-sm font-medium text-[#BACCE1]">1 JANUARY, 2026</h1>
-                  </div>
-
-                  <div className="flex gap-2 items-center">
-                    <Image src="/Star.png" alt="Star" width="24" height="24" />
-                    <h1 className="text-sm font-medium text-[#BACCE1]">5.0 Review</h1>
-                  </div>
-                </div>
-              </div>
+            <div className="h-120 w-175 rounded-4xl relative">
+              <Image src="/DIT Hackathn 2025.png" alt="DIT Hackathn 2025" fill className="object-cover" />
             </div>
             <div className="flex gap-5">
               {/* 4 box ทางด้านขา */}
               <div>
-                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
-                  <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
-                  <div className="absolute bottom-6 left-6 space-y-1">
-                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
-                      <h1 className="text-[#BACCE1] font-bold text-sm">พัฒนาการ/เวิร์กชอป</h1>
-                    </div>
-
-                    <p className="text-sm font-semibold text-[#BACCE1]">GTC : Build Your Own AI #3</p>
-
-                    <div className="flex space-x-10">
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">1 JANUARY, 2026</h1>
-                      </div>
-
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">4.6 Review</h1>
-                      </div>
-                    </div>
-                  </div>
+                <div className="h-60 w-87 rounded-2xl mb-5 relative">
+                  <Image src="/GTC Build Your Own.png" alt="GTC Build Your Own" fill className="object-cover" />
                 </div>
 
-                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
-                  <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
-                  <div className="absolute bottom-6 left-6 space-y-1">
-                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
-                      <h1 className="text-[#BACCE1] font-bold text-sm">นิทรรศการ/เปิดบ้าน</h1>
-                    </div>
-
-                    <p className="text-sm font-semibold text-[#BACCE1]">IT Ladkrabang Open House 2025</p>
-
-                    <div className="flex space-x-10">
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">14 FEBRUARY, 2026</h1>
-                      </div>
-
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">4.8 Review</h1>
-                      </div>
-                    </div>
-                  </div>
+                <div className="bg-gray-700 h-60 w-87 rounded-2xl mb-5 relative">
+                  <Image src="/IT Ladkrbng.png" alt="IT Ladkrbng" fill className="object-cover" />
                 </div>
               </div>
 
               <div>
-                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
-                  <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
-                  <div className="absolute bottom-6 left-6 space-y-1">
-                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
-                      <h1 className="text-[#BACCE1] font-bold text-sm">แนะแนวคณะ/อาชีพ</h1>
-                    </div>
-
-                    <p className="text-sm font-semibold text-[#BACCE1]">Extreme Game Development Camp</p>
-
-                    <div className="flex space-x-10">
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">15 MARCH, 2026</h1>
-                      </div>
-
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">4.9 Review</h1>
-                      </div>
-                    </div>
-                  </div>
+                <div className="bg-gray-700 h-60 w-87 rounded-2xl mb-5 relative">
+                  <Image src="/Extreme Game Development.png" alt="Extreme Game Development" fill className="object-cover" />
                 </div>
 
-                <div className="bg-gray-700 h-60 w-87 rounded-4xl mb-5 relative">
-                  <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="absolute top-4 right-4 rounded-full object-cover" />
-                  <div className="absolute bottom-6 left-6 space-y-1">
-                    <div className="bg-white/50 h-ุ w-50 rounded-xl flex items-center px-3">
-                      <h1 className="text-[#BACCE1] font-bold text-sm">กิจกรรมออนไลน์</h1>
-                    </div>
-
-                    <p className="text-sm font-semibold text-[#BACCE1]">ComCamp 35 ค่ายวิศวะคอมพิวเตอร์ มจธ.</p>
-
-                    <div className="flex space-x-10">
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Calendar.png" alt="Calendar" width="18" height="18" />
-                        <h1 className="text-sm font-medium text-[#BACCE1]">28 MARCH, 2026</h1>
-                      </div>
-
-                      <div className="flex gap-2 items-center">
-                        <Image src="/Star.png" alt="Star" width="18" height="18" />
-                        <p className="text-sm font-medium text-[#BACCE1]">4.3 Review</p>
-                      </div>
-                    </div>
-                  </div>
+                <div className="bg-gray-700 h-60 w-87 rounded-2xl mb-5 relative">
+                  <Image src="/ComCamp.png" alt="ComCamp" fill className="object-cover" />
                 </div>
               </div>
             </div>
@@ -535,8 +438,8 @@ const Hero = () => {
               </div>
             </div>
           </div>
-          {/* Box review 3 */}
-          <div className="bg-[#000523] min-h-screen flex items-center justify-center">
+          {/* Box search */}
+          <div className="bg-search min-h-screen flex items-center justify-center bg-[#000523] ">
             <div className="flex flex-col items-center text-center gap-6">
               <div className="text-6xl md:text-7xl font-extrabold tracking-tight flex">
                 <h1 className="bg-linear-to-b from-white to-white/40 bg-clip-text text-transparent">Fastcamp</h1>
@@ -546,7 +449,7 @@ const Hero = () => {
                 <h1 className="text-white/50 text-lg">แชร์ประสบการณ์ของคุณหลังเข้าค่าย/ร่วมงานกับ Fastcamp</h1>
               </div>
               <div className="mt-6 flex items-center gap-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-3 w-105 max-w-full">
-                <input type="text" placeholder="Enter your comment" className="bg-transparent flex-1 outline-none text-white placeholder-white/40"/>
+                <input type="text" placeholder="Enter your comment" className="bg-transparent flex-1 outline-none text-white placeholder-white/40 "/>
                 <button className="bg-white/20 hover:bg-white/30 transition px-6 py-2 rounded-full text-white font-medium">Submit</button>
               </div>
               <div>
