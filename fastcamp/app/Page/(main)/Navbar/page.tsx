@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 const Navbar = () => {
@@ -31,7 +32,7 @@ const Navbar = () => {
       <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 text-white text-xl gap-10 font-bold">
         <p className="cursor-pointer">Home</p>
         <p className="cursor-pointer">Category</p>
-        <p className="cursor-pointer">ส่งกิจกรรมเข้าร่วม</p>
+        <Link href="/app/Page/login" className="cursor-pointer">ส่งกิจกรรมเข้าร่วม</Link>
       </div>
 
       {/* Mobile Hamburger */}
