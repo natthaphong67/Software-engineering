@@ -7,20 +7,20 @@ const Hero = () => {
       <div className="absolute inset-0 flex justify-center pt-40 z-10">
         <div
           className="
-            flex gap-40 text-[160px] font-black tracking-tighter leading-none
+            flex gap-50 text-[200px] font-black tracking-tighter leading-none
             bg-linear-to-r from-white via-gray-300 to-gray-400
-            bg-clip-text text-transparent
+            bg-clip-text text-transparent mt-35
             drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]
           "
         >
-          <h1>FAST</h1>
-          <h1>CAMP</h1>
+          <h1>F A S T</h1>
+          <h1>C A M P</h1>
         </div>
       </div>
 
       {/* AI IMAGE */}
-      <div className="absolute inset-0 flex justify-center items-start z-30">
-        <div className="relative w-130 h-130 translate-y-40">
+      <div className="absolute inset-0 flex justify-center items-start z-30 -mt-2.5">
+        <div className="relative w-180 h-130 translate-y-40">
           <Image src="/Ai.png" alt="AI Model" fill className="object-contain"priority/>
         </div>
       </div>
@@ -29,7 +29,7 @@ const Hero = () => {
       {/* WAVE */}
       <div className="relative bg-[#000523] h-130">
         <svg viewBox="0 0 1200 320" preserveAspectRatio="none" className="absolute bottom-0 translate-y-90 w-full h-65">
-          <path fill="white" d="M 1 62 C 19 235 465 82 475 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
+          <path fill="white" d="M 1 62 C 19 235 465 82 443 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
         </svg>
       </div>
       <div className="text-white text-2xl font-bold pl-40 absolute mt-40">
@@ -39,96 +39,133 @@ const Hero = () => {
 
       {/* WHITE SECTION */}
       <div className="bg-white min-h-screen mt-90 justify-center items-center">
-        <div className="flex gap-8 p-2 pl-25">
+        <div className="flex gap-8 p-2">
           {/*BOX นิทรรศการ/เปิดบ้าน */}
-          <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383] p-5 shadow-xl items-center justify-center">
-            <div className="relative w-75 h-75 rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383] p-6 border border-white/70 flex flex-col shadow-xl">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-square rounded-4xl bg-linear-to-t from-[#073870] to-[#3F8BE2] p-4 sm:p-5 shadow-xl flex items-center justify-center">
+            <div className="relative w-full h-full rounded-4xl bg-linear-to-t from-[#073870] to-[#3F8BE2] p-5 sm:p-6 border border-white/70 flex flex-col shadow-xl">
               {/* top */}
               <div className="flex items-center justify-between">
-                <p className="text-white text-lg font-medium">Fastwork</p>
-                <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="rounded-full object-cover" />
+                <p className="text-white text-base sm:text-lg font-medium">Fastwork</p>
+                <Image src="/Arrow Outward.png" alt="Arrow Outward" width={28} height={28} className="rounded-full object-cover sm:w-8 sm:h-8"/>
               </div>
+
               {/* mid */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <Image src="/นิทรรศการเปิดบ้าน.png" alt="นิทรรศการเปิดบ้าน" fill className=" object-contain" />
+              <div className="relative flex-1 flex items-center justify-center">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-square">
+                  <Image
+                    src="/นิทรรศการเปิดบ้าน.png"
+                    alt="นิทรรศการเปิดบ้าน"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              
-              {/* Low */}
-              <div className="mt-auto pb-2">
-                <h1 className="text-white text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
-                <div className="mt-3 inline-flex items-center gap-2 px-5 py-2 border border-white/80 rounded-full text-white">
+
+              {/* bottom */}
+              <div>
+                <h1 className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
+                <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-white/80 rounded-full text-white">
                   <p className="font-bold">33</p>
                   <p className="text-sm">camp</p>
                 </div>
               </div>
             </div>
           </div>
+
 
           {/*BOX พัฒนาการ/เวิร์กชอป */}
-          <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[##c2cdde] to-[#425681] p-5 shadow-xl items-center justify-center">
-            <div className="relative w-75 h-75 rounded-4xl bg-linear-to-t from-[##a2acbe] to-[#425271] p-6 border border-white/70 flex flex-col shadow-xl">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-square rounded-4xl bg-linear-to-t from-[#002C6B] to-[#A6BEDB] p-4 sm:p-5 shadow-xl flex items-center justify-center">
+            <div className="relative w-full h-full rounded-4xl bg-linear-to-t from-[#002C6B] to-[#A6BEDB] p-5 sm:p-6 border border-white/70 flex flex-col shadow-xl">
               {/* top */}
               <div className="flex items-center justify-between">
-                <p className="text-white text-lg font-medium">Fastwork</p>
-                <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="rounded-full object-cover" />
+                <p className="text-white text-base sm:text-lg font-medium">Fastwork</p>
+                <Image src="/Arrow Outward.png" alt="Arrow Outward" width={28} height={28} className="rounded-full object-cover sm:w-8 sm:h-8"/>
               </div>
+
               {/* mid */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <Image src="/พัฒนาการเวิร์กชอป.png" alt="พัฒนาการ/เวิร์กชอป" fill className=" object-contain" />
+              <div className="relative flex-1 flex items-center justify-center">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-square">
+                  <Image
+                    src="/นิทรรศการเปิดบ้าน.png"
+                    alt="นิทรรศการเปิดบ้าน"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              
-              {/* Low */}
-              <div className="mt-auto pb-2">
-                <h1 className="text-white text-2xl font-semibold leading-tight">พัฒนาการ/เวิร์กชอป</h1>
-                <div className="mt-3 inline-flex items-center gap-2 px-5 py-2 border border-white/80 rounded-full text-white">
+
+              {/* bottom */}
+              <div>
+                <h1 className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
+                <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-white/80 rounded-full text-white">
                   <p className="font-bold">33</p>
                   <p className="text-sm">camp</p>
                 </div>
               </div>
             </div>
           </div>
+
+
 
           {/*BOX แนะแนวคณะ/อาชีพ */}
-          <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[#323a69] to-[#626bb9] p-5 shadow-xl items-center justify-center">
-            <div className="relative w-75 h-75 rounded-4xl bg-linear-to-t from-[#353364] to-[##787fb8] p-6 border border-white/70 flex flex-col shadow-xl">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-square rounded-4xl bg-linear-to-t from-[#1F32AB] vin-[#BFC8FF] to-[#000E63] p-4 sm:p-5 shadow-xl flex items-center justify-center">
+            <div className="relative w-full h-full rounded-4xl bg-linear-to-t from-[#000A43]/50 to-[#000E63]/50 p-5 sm:p-6 border border-white/70 flex flex-col shadow-xl">
               {/* top */}
               <div className="flex items-center justify-between">
-                <p className="text-white text-lg font-medium">Fastwork</p>
-                <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="rounded-full object-cover" />
+                <p className="text-white text-base sm:text-lg font-medium">Fastwork</p>
+                <Image src="/Arrow Outward.png" alt="Arrow Outward" width={28} height={28} className="rounded-full object-cover sm:w-8 sm:h-8"/>
               </div>
+
               {/* mid */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <Image src="/แนะแนวคณะอาชีพ.png" alt="แนะแนวคณะ/อาชีพ" fill className=" object-contain" />
+              <div className="relative flex-1 flex items-center justify-center">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-square">
+                  <Image
+                    src="/นิทรรศการเปิดบ้าน.png"
+                    alt="นิทรรศการเปิดบ้าน"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              
-              {/* Low */}
-              <div className="mt-auto pb-2">
-                <h1 className="text-white text-2xl font-semibold leading-tight">แนะแนวคณะ/อาชีพ</h1>
-                <div className="mt-3 inline-flex items-center gap-2 px-5 py-2 border border-white/80 rounded-full text-white">
+
+              {/* bottom */}
+              <div>
+                <h1 className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
+                <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-white/80 rounded-full text-white">
                   <p className="font-bold">33</p>
                   <p className="text-sm">camp</p>
                 </div>
               </div>
             </div>
           </div>
+
+
 
           {/*BOX เสวนา/สัมนา/ทอล์คโชว์ */}
-          <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[#6c8ac6] to-[#503b7d] p-5 shadow-xl items-center justify-center">
-            <div className="relative w-75 h-75 rounded-4xl bg-linear-to-t from-[#7b8dbb] to-[#584a87] p-6 border border-white/70 flex flex-col shadow-xl">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-square rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383]p-4 sm:p-5 shadow-xl flex items-center justify-center">
+            <div className="relative w-full h-full rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383] p-5 sm:p-6 border border-white/70 flex flex-col shadow-xl">
               {/* top */}
               <div className="flex items-center justify-between">
-                <p className="text-white text-lg font-medium">Fastwork</p>
-                <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="rounded-full object-cover" />
+                <p className="text-white text-base sm:text-lg font-medium">Fastwork</p>
+                <Image src="/Arrow Outward.png" alt="Arrow Outward" width={28} height={28} className="rounded-full object-cover sm:w-8 sm:h-8"/>
               </div>
+
               {/* mid */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <Image src="/เสวนาสัมนาทอล์คโชว์.png" alt="เสวนา/สัมนา/ทอล์คโชว์" fill className=" object-contain" />
+              <div className="relative flex-1 flex items-center justify-center">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-square">
+                  <Image
+                    src="/นิทรรศการเปิดบ้าน.png"
+                    alt="นิทรรศการเปิดบ้าน"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              
-              {/* Low */}
-              <div className="mt-auto pb-2">
-                <h1 className="text-white text-2xl font-semibold leading-tight">เสวนา/สัมนา/ทอล์คโชว์</h1>
-                <div className="mt-3 inline-flex items-center gap-2 px-5 py-2 border border-white/80 rounded-full text-white">
+
+              {/* bottom */}
+              <div>
+                <h1 className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
+                <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-white/80 rounded-full text-white">
                   <p className="font-bold">33</p>
                   <p className="text-sm">camp</p>
                 </div>
@@ -136,23 +173,33 @@ const Hero = () => {
             </div>
           </div>
 
+
+
           {/*BOX ประกวดแข่งขัน */}
-          <div className="relative w-85 h-85 rounded-4xl bg-linear-to-t from-[#b1c9f0] to-[#192542] p-5 shadow-xl items-center justify-center">
-            <div className="relative w-75 h-75 rounded-4xl bg-linear-to-t from-[#aac1e9] to-[#43506b] p-6 border border-white/70 flex flex-col shadow-xl">
+          <div className="relative w-full max-w-[340px] sm:max-w-[380px] lg:max-w-[420px] aspect-square rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383]p-4 sm:p-5 shadow-xl flex items-center justify-center">
+            <div className="relative w-full h-full rounded-4xl bg-linear-to-t from-[#7293cf] to-[#3a5383] p-5 sm:p-6 border border-white/70 flex flex-col shadow-xl">
               {/* top */}
               <div className="flex items-center justify-between">
-                <p className="text-white text-lg font-medium">Fastwork</p>
-                <Image src="/Arrow Outward.png" alt="Arrow Outward" width="32" height="32" className="rounded-full object-cover" />
+                <p className="text-white text-base sm:text-lg font-medium">Fastwork</p>
+                <Image src="/Arrow Outward.png" alt="Arrow Outward" width={28} height={28} className="rounded-full object-cover sm:w-8 sm:h-8"/>
               </div>
+
               {/* mid */}
-              <div className="relative w-32 h-32 flex items-center justify-center">
-                <Image src="/ประกวดแข่งขัน.png" alt="ประกวดแข่งขัน" fill className=" object-contain" />
+              <div className="relative flex-1 flex items-center justify-center">
+                <div className="relative w-24 sm:w-28 lg:w-32 aspect-square">
+                  <Image
+                    src="/นิทรรศการเปิดบ้าน.png"
+                    alt="นิทรรศการเปิดบ้าน"
+                    fill
+                    className="object-contain"
+                  />
+                </div>
               </div>
-              
-              {/* Low */}
-              <div className="mt-auto pb-2">
-                <h1 className="text-white text-2xl font-semibold leading-tight">ประกวดแข่งขัน</h1>
-                <div className="mt-3 inline-flex items-center gap-2 px-5 py-2 border border-white/80 rounded-full text-white">
+
+              {/* bottom */}
+              <div>
+                <h1 className="text-white text-lg sm:text-xl lg:text-2xl font-semibold leading-tight">นิทรรศการ/เปิดบ้าน</h1>
+                <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 border border-white/80 rounded-full text-white">
                   <p className="font-bold">33</p>
                   <p className="text-sm">camp</p>
                 </div>
@@ -160,6 +207,7 @@ const Hero = () => {
             </div>
           </div>
         </div>
+
         {/* กิจกรรมยอดนิยม */}
         <div className="relative items-center justify-center">
           {/* ข้อความ */}
@@ -195,7 +243,7 @@ const Hero = () => {
           </div>
           {/* ส่งกิจกรรมขึ้นเว็บ */}
           <div className="flex items-center">
-            <div className="relative z-10 w-200 h-75 bg-linear-to-r from-[#0b0f2b] to-[#1a2b6f] px-12 bg_clip ml-85 my-25 flex">
+            <div className="relative z-10 w-200 h-75 bg-linear-to-r from-[#0b0f2b] to-[#1a2b6f] px-12 bg_clip ml-50 my-25 flex">
               <div className="flex  mt-15 gap-15">
                 <div className="text-white font-bold text-2xl">
                   <div className="flex gap-2">
