@@ -30,9 +30,9 @@ const Navbar = () => {
 
       {/* Desktop Menu */}
       <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 text-white text-xl gap-10 font-bold">
-        <p className="cursor-pointer">Home</p>
-        <p className="cursor-pointer">Category</p>
-        <Link href="/app/Page/login" className="cursor-pointer">ส่งกิจกรรมเข้าร่วม</Link>
+        <Link href="/" className="cursor-pointer">Home</Link>
+        <Link href="/Page/Category" className="cursor-pointer">Category</Link>
+        <Link href="/Page/Form_normal" className="cursor-pointer">ส่งกิจกรรมเข้าร่วม</Link>
       </div>
 
       {/* Mobile Hamburger */}
