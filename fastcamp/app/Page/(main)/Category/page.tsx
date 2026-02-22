@@ -12,6 +12,17 @@ const Category = () => {
         </div>
           {/* IMAGE */}
           <Image src="/2.png" alt="Hero" width={1883} height={733} priority className="hidden md:block absolute bottom-0 left-1/2 -translate-x-1/2 max-w-none z-10"/>
+      <div className="h-180 mt-10 mx-4 md:mx-8 relative flex flex-col items-center justify-center overflow-visible rounded-4xl bg-linear-to-r from-[#280C3C] via-[#000523] to-[#003376]">
+        <div className="text-center -mt-20"> 
+          {/*  */}
+          <h1 className="relative z-10 -translate-y-10 text-[10rem] font-black bg-linear-to-r from-white via-neutral-600 to-gray-900 bg-clip-text text-transparent">
+            CATEGORY
+          </h1>
+          <h1 className="relative z-10 -translate-y-10 text-3xl font-black bg-linear-to-r from-white to-gray-500 bg-clip-text text-transparent">
+            ค่ายที่ใช่สำหรับความสนใจของคุณ
+          </h1> 
+        </div> 
+        <Image src="/2.png" alt="Hero" fill className="absolute inset-0 mt-60 object-contain z-20" priority /> 
       </div>
       <div className="min-h-screen bg-white flex items-center justify-center px-6 py-10">
         <div className="mt-10 mx-auto flex flex-col gap-6 rounded-4xl border p-4 md:p-8 w-full max-w-7xl">
