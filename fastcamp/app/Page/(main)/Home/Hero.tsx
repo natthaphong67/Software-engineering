@@ -4,24 +4,20 @@ const Hero = () => {
   return (
     <div className="relative min-h-screen bg-[#000523] overflow-hidden">
       {/* TEXT FAST CAMP */}
-      <div className="absolute inset-0 flex justify-center pt-40 z-10">
-        <div
-          className="
-            flex gap-50 text-[200px] font-black tracking-tighter leading-none
-            bg-linear-to-r from-white via-gray-300 to-gray-400
-            bg-clip-text text-transparent mt-35
-            drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]
-          "
-        >
+      <div className="relative md:absolute inset-0 flex justify-center pt-20 md:pt-40 z-10">
+        <div className="flex gap-6 md:gap-50 font-black tracking-tighter leading-none text-[48px] sm:text-[72px] md:text-[200px]
+          bg-gradient-to-r from-white via-gray-300  to-gray-400 bg-clip-text
+          text-transparent mt-10 md:mt-35 drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]">
           <h1>F A S T</h1>
+
           <h1>C A M P</h1>
         </div>
       </div>
 
       {/* AI IMAGE */}
-      <div className="absolute inset-0 flex justify-center items-start z-30 -mt-2.5">
-        <div className="relative w-180 h-130 translate-y-40">
-          <Image src="/Ai.png" alt="AI Model" fill className="object-contain"priority/>
+      <div className="hidden md:flex absolute inset-0 justify-center items-start z-30 -mt-2.5">
+        <div className="relative w-[720px] h-[520px] translate-y-40">
+          <Image src="/Ai.png" alt="AI Model" fill priority className="object-contain"/>
         </div>
       </div>
 
