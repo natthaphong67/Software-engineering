@@ -66,7 +66,7 @@ const Login = () => {
                 <input type="checkbox" className="accent-blue-500" />
                 Remember me
               </label>
-              <a href="#" className="text-blue-500 hover:underline">
+              <a href="/Page/Reset-password" className="text-blue-500 hover:underline">
                 Forgot Password
               </a>
             </div>
@@ -79,7 +79,7 @@ const Login = () => {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Don&apos;t have an account?{" "}
-            <a href="#" className="text-blue-500 font-medium hover:underline">
+            <a href="/Page/Register" className="text-blue-500 font-medium hover:underline">
               Sign up
             </a>
           </p>
