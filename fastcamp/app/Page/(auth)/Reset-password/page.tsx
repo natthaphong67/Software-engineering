@@ -60,7 +60,9 @@ const Reset_password = () => {
               </div>
             </div>
             {/* SUBMIT BUTTON */}
-            <button className=" w-full py-3 ounded-full rounded-full  text-white font-medium bg-gradient-to-r  from-[#4f46e5] to-[#4338ca] hover:opacity-90 transition shadow-sm">Submit</button>
+            <Link href="/Page/Otp_verification">
+                <button className=" w-full py-3 ounded-full rounded-full  text-white font-medium bg-gradient-to-r  from-[#4f46e5] to-[#4338ca] hover:opacity-90 transition shadow-sm">Submit</button>
+            </Link>
           </form>
         </div>
       </div>
