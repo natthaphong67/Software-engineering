@@ -1,9 +1,7 @@
 @import "tailwindcss";
 
-@layer components {
-  .bg_clip{
-    clip-path: polygon(0 0, 100% 0, 80% 61%, 0 61%);
-  }
+.clip-diagonal {
+  clip-path: polygon(0 0, 92% 0, 82% 100%, 0% 100%);
 }
 
 .bg-search {
