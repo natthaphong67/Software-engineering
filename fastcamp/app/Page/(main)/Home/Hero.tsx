@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Review from "./review";
 
 const Hero = () => {
   return (
@@ -366,25 +367,7 @@ const Hero = () => {
         </div>
 
           {/* Review */}
-          <div className="bg-[#000523] min-h-screen pb-20 flex flex-col items-center justify-center">
-          {/* img */}
-          <div className="relative">
-              <Image src="/Section.png" alt="Section" width={1204} height={557} className="w-full h-[557px] object-contain"/>
-          </div>
-            {/* box comment */}
-            <div>
-              <div className="bg-gradient-to-r from-white/0 to-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-            </div>
-          </div>
+          <Review/>
 
           {/* Box search */}
           <div className="bg-search min-h-screen flex items-center justify-center bg-[#000523]">
