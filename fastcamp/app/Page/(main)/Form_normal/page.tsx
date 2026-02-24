@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import MyDatePicker from "./DataTime";
+import Footer from "@/components/footer/Footer";
 
 type CheckboxProps = {
   label: string;

@@ -183,26 +183,26 @@ const Hero = () => {
         </div>
 
         {/* Why Trust */}
-        <div className="w-full bg-[#F5F6FA] py-[80px]">
+        <div className="w-full bg-white py-[80px]">
           <h2 className="text-center text-[32px] md:text-[36px] font-bold text-[#0B0F2B]">Why Trust Our Platform?</h2>
           <div className="flex justify-center gap-[120px] mt-[60px] flex-wrap">
             <div className="flex flex-col items-center">
-              <div className="w-[96px] h-[96px] rounded-[20px] bg-gradient-to-br from-[#7B8CFF] to-[#5B6CFF] flex items-center justify-center shadow-md">
-                <Image src="/handshake-icon.png" alt="ทั้งหมด" width={150} height={150} className="w-[150px] h-[150px]"/>
+              <div className="w-[168px] h-[168px] rounded-[20px] bg-gradient-to-br flex items-center justify-center shadow-md">
+                <Image src="/handshake-icon.png" alt="ทั้งหมด" width={168} height={168} className="w-[168px] h-[168px]"/>
               </div>
               <p className="mt-[18px] text-[18px] font-semibold text-[#0B0F2B]">ค่ายทั้งหมด</p>
               <p className="mt-[6px] text-[44px] font-bold text-[#0B0F2B]">89</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-[96px] h-[96px] rounded-[20px] bg-gradient-to-br from-[#7FD8FF] to-[#4BA3FF] flex items-center justify-center shadow-md">
-                <Image src="/Frame 1158.png" alt="เปิดรับ" width={150} height={150} className="w-[150px] h-[150px]"/>
+              <div className="w-[168px] h-[168px] rounded-[20px] bg-gradient-to-br from-[#7FD8FF] to-[#4BA3FF] flex items-center justify-center shadow-md">
+                <Image src="/Frame 1158.png" alt="เปิดรับ" width={168} height={168} className="w-[168px] h-[168px]"/>
               </div>
               <p className="mt-[18px] text-[18px] font-semibold text-[#0B0F2B]">ค่ายที่เปิดรับสมัคร</p>
               <p className="mt-[6px] text-[44px] font-bold text-[#1F7AE0]">67</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="w-[96px] h-[96px] rounded-[20px] bg-gradient-to-br from-[#C9A7FF] to-[#8D63FF] flex items-center justify-center shadow-md">
-                <Image src="/Frame 1159.png" alt="จัดแล้ว" width={150} height={150} className="w-[150px] h-[150px]"/>
+              <div className="w-[168px] h-[168px] rounded-[20px] bg-gradient-to-br from-[#C9A7FF] to-[#8D63FF] flex items-center justify-center shadow-md">
+                <Image src="/Frame 1159.png" alt="จัดแล้ว" width={168} height={168} className="w-[168px] h-[168px]"/>
               </div>
               <p className="mt-[18px] text-[18px] font-semibold text-[#0B0F2B]">ค่ายที่จัดแล้ว</p>
               <p className="mt-[6px] text-[44px] font-bold text-[#5B2BE0]">22</p>
@@ -211,7 +211,7 @@ const Hero = () => {
         </div>
 
         {/* กิจกรรมล่าสุด */}
-        <div className="py-12">
+        <div className="py-12 ">
           <div className="max-w-6xl mx-auto px-4 mb-8">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">กิจกรรมล่าสุด</h1>
           </div>
@@ -240,9 +240,9 @@ const Hero = () => {
                   <h1>มาร่วมเปิดประสบการณ์สุดพิเศษกับงาน AI แห่งปี พบผู้นำระดับโลก นักนวัตกรรม</h1>
                   <h1>และผู้สร้างอนาคต ในวันที่รวม Keynote, Showcase และแรงบันดาลใจจากโลกจริง ไว้ในที่เดียว</h1>
                 </div>
-                <button className="inline-flex items-center gap-2 border-2 border-[#6D757F] rounded-full px-4 py-1.5 whitespace-nowrap">
-                  <span className="text-sm font-light text-[#92989F]">READ MORE</span>
-                  <div className="relative w-4 h-4">
+                <button className="w-[138px] h-[36px] inline-flex items-center justify-center gap-2 border-2 border-[#6D757F] rounded-full">
+                  <span className="text-[14px] font-light text-[#92989F] leading-none">READ MORE</span>
+                  <div className="relative w-[16px] h-[16px]">
                     <Image src="/arrow-6D757F.png" alt="Arrow" fill className="object-contain"/>
                   </div>
                 </button>
@@ -273,9 +273,9 @@ const Hero = () => {
                   <h1>เปิดโลก วิศวะคอมและวิทย์คอม ให้เข้าใจง่ายและสนุกผ่านคลาสออนไลน์ 6 ชั่วโมง ที่จะพานักเรียนเรียนรู้ </h1>
                   <h1>ตั้งแต่การเขียนโปรแกรมสร้างระบบปฏิบัติการอย่างง่าย ไปจนถึงการจัดการและการวิเคราะห์ข้อมูล</h1>
                 </div>
-                <button className="inline-flex items-center gap-2 border-2 border-[#6D757F] rounded-full px-4 py-1.5 whitespace-nowrap">
-                  <span className="text-sm font-light text-[#92989F]">READ MORE</span>
-                  <div className="relative w-4 h-4">
+                <button className="w-[138px] h-[36px] inline-flex items-center justify-center gap-2 border-2 border-[#6D757F] rounded-full">
+                  <span className="text-[14px] font-light text-[#92989F] leading-none">READ MORE</span>
+                  <div className="relative w-[16px] h-[16px]">
                     <Image src="/arrow-6D757F.png" alt="Arrow" fill className="object-contain"/>
                   </div>
                 </button>
@@ -306,9 +306,9 @@ const Hero = () => {
                   <h1>เรียนรู้พื้นฐานการเขียนโปรแกรม ตั้งแต่โครงสร้างเบื้องต้น การสร้างระบบง่ายๆ ไปจนถึงการประยุกต์ใช้</h1>
                   <h1>Python ในชีวิตประจำวัน พร้อมสิทธิพิเศษเข้าร่วมแข่งขัน Python Best Mini Project</h1>
                 </div>
-                <button className="inline-flex items-center gap-2 border-2 border-[#6D757F] rounded-full px-4 py-1.5 whitespace-nowrap">
-                  <span className="text-sm font-light text-[#92989F]">READ MORE</span>
-                  <div className="relative w-4 h-4">
+                <button className="w-[138px] h-[36px] inline-flex items-center justify-center gap-2 border-2 border-[#6D757F] rounded-full">
+                  <span className="text-[14px] font-light text-[#92989F] leading-none">READ MORE</span>
+                  <div className="relative w-[16px] h-[16px]">
                     <Image src="/arrow-6D757F.png" alt="Arrow" fill className="object-contain"/>
                   </div>
                 </button>
@@ -339,9 +339,9 @@ const Hero = () => {
                   <h1>เปิดโลก วิศวะคอมและวิทย์คอม ให้เข้าใจง่ายและสนุกผ่านคลาสออนไลน์ 6 ชั่วโมง ที่จะพานักเรียนเรียนรู้</h1>
                   <h1>ตั้งแต่การเขียนโปรแกรมสร้างระบบปฏิบัติการอย่างง่าย ไปจนถึงการจัดการและการวิเคราะห์ข้อมูล</h1>
                 </div>
-                <button className="inline-flex items-center gap-2 border-2 border-[#6D757F] rounded-full px-4 py-1.5 whitespace-nowrap">
-                  <span className="text-sm font-light text-[#92989F]">READ MORE</span>
-                  <div className="relative w-4 h-4">
+                <button className="w-[138px] h-[36px] inline-flex items-center justify-center gap-2 border-2 border-[#6D757F] rounded-full">
+                  <span className="text-[14px] font-light text-[#92989F] leading-none">READ MORE</span>
+                  <div className="relative w-[16px] h-[16px]">
                     <Image src="/arrow-6D757F.png" alt="Arrow" fill className="object-contain"/>
                   </div>
                 </button>
@@ -366,74 +366,14 @@ const Hero = () => {
         </div>
 
           {/* Review */}
-          <div className="bg-[#000523] min-h-screen pb-20 justify-center items-center">
-            <div className="relative h-120 w-240 items-center justify-center ml-135">
-              <Image src="/Section.png" alt="Section" fill className="object-cover mt-60"/>
-            </div>
-            <div className="flex items-center justify-center space-x-15 mt-15">
+          <div className="bg-[#000523] min-h-screen pb-20 flex flex-col items-center justify-center">
+          {/* img */}
+          <div className="relative">
+              <Image src="/Section.png" alt="Section" width={1204} height={557} className="w-full h-[557px] object-contain"/>
+          </div>
+            {/* box comment */}
+            <div>
               <div className="bg-gradient-to-r from-white/0 to-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-              <div className="bg-gradient-to-r from-white/15 to-white/0 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-            </div>
-            <div className="flex items-center justify-center space-x-15 mt-10">
-              <div className="bg-gradient-to-r from-white/0 to-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-              <div className="bg-white/15 h-60 w-100 rounded-2xl p-6 text-white">
-                <div className="flex items-center gap-4 mb-4">
-                  <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
-                  <div>
-                    <h1 className="font-semibold">Fabrizio Rinaldi</h1>
-                    <p className="text-sm opacity-70">@linuz90</p>
-                  </div>
-                </div>
-                <h1>ขอบคุณ Fastcamp ที่ช่วยเผยแพร่ค่ายของเรา ทำให้คนที่อยากเรียนรู้เข้าถึงเราได้มากขึ้น!</h1>
-              </div>
-              <div className="bg-gradient-to-r from-white/15 to-white/0 h-60 w-100 rounded-2xl p-6 text-white">
                 <div className="flex items-center gap-4 mb-4">
                   <Image src="/Profile.png" alt="Profile" height={48} width={48} className="rounded-full object-cover"/>
                   <div>
@@ -465,7 +405,6 @@ const Hero = () => {
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </div>

@@ -6,10 +6,9 @@
 
 .bg-search {
   background-image: url("/HomepageBG_CommentBG.png");
-  background-repeat: no-repeat;
   background-position: center;
+  background-repeat: no-repeat;
   background-size: cover;
-  
 }
 
 input[type="date"]::-webkit-datetime-edit {

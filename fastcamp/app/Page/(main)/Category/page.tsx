@@ -15,7 +15,10 @@ const Category = () => {
           </h2>
         </div>
         {/* IMAGE — แสดงบน mobile ด้วย (เปลี่ยนจาก hidden md:block เป็น block) */}
-        <Image src="/2.png" alt="Hero" width={1883} height={733} priority className=" absolute bottom-0 left-1/2 -translate-x-1/2 max-w-none z-10"/>
+        <div>
+          <Image src="/2.png" alt="Hero" width={1883} height={733} priority className=" absolute  bottom-0 left-1/2 -translate-x-1/2 max-w-none z-10 "/>
+        </div>
+        
       </div>
 
       {/* Content Section */}
