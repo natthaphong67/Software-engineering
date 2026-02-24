@@ -73,7 +73,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/*BOX แนะแนวคณะ/อาชีพ — FIX: vin- → via-, duplicate border ลบออก */}
+          {/*BOX แนะแนวคณะ/อาชีพ */}
           <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[260px] lg:max-w-[305px] aspect-[305/306] rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-gradient-to-b from-[#3a4588] via-[#c2cbf7] to-[#5d6cc5] p-[8px] sm:p-[10px] lg:p-[12px] shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
             <div className="w-full h-full rounded-[16px] sm:rounded-[22px] lg:rounded-[26px] bg-gradient-to-b from-[#353f81] to-[#4d5aaa] border border-white/60 p-3 sm:p-4 lg:p-6 flex flex-col justify-between">
               <div className="flex justify-between items-center">
@@ -93,7 +93,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/*BOX เสวนา/สัมนา/ทอล์คโชว์ — FIX: duplicate border ลบออก */}
+          {/*BOX เสวนา/สัมนา/ทอล์คโชว์ */}
           <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[260px] lg:max-w-[305px] aspect-[305/306] rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-gradient-to-b from-[#3a4588] to-[#5a3784] p-[8px] sm:p-[10px] lg:p-[12px] shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
             <div className="w-full h-full rounded-[16px] sm:rounded-[22px] lg:rounded-[26px] bg-gradient-to-b from-[#5f75b5] to-[#614a91] border border-white/60 p-3 sm:p-4 lg:p-6 flex flex-col justify-between">
               <div className="flex justify-between items-center">
@@ -113,7 +113,7 @@ const Hero = () => {
             </div>
           </div>
 
-          {/*BOX ประกวดแข่งขัน — FIX: duplicate border ลบออก */}
+          {/*BOX ประกวดแข่งขัน */}
           <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[260px] lg:max-w-[305px] aspect-[305/306] rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-gradient-to-b from-[#a2caf7] to-[#556d8c] p-[8px] sm:p-[10px] lg:p-[12px] shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
             <div className="w-full h-full rounded-[16px] sm:rounded-[22px] lg:rounded-[26px] bg-gradient-to-b from-[#a2c9f7] to-[#54759b] border border-white/60 p-3 sm:p-4 lg:p-6 flex flex-col justify-between">
               <div className="flex justify-between items-center">
@@ -163,7 +163,6 @@ const Hero = () => {
             <div className="relative w-full max-w-[1000px] aspect-[1000/127] flex items-center">
               <div className="relative z-10 w-[75%] md:w-[65%] lg:w-[60%] xl:w-[55%] h-full bg-gradient-to-r from-[#0b0f2b] to-[#1a2b6f] flex items-center px-[5%] pr-[8%] clip-diagonal">
                 <div className="flex items-center gap-[5%] w-full">
-                  {/* FIX: text-[20px)] → text-[20px] */}
                   <div className="text-white font-bold leading-tight">
                     <div className="flex gap-2">
                       <h1 className="text-[20px]">จุดเริ่มต้นที่ค่ายคุณจะ</h1>
@@ -183,7 +182,7 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* Why Trust — FIX: Image width/height string → number */}
+        {/* Why Trust */}
         <div className="w-full bg-[#F5F6FA] py-[80px]">
           <h2 className="text-center text-[32px] md:text-[36px] font-bold text-[#0B0F2B]">Why Trust Our Platform?</h2>
           <div className="flex justify-center gap-[120px] mt-[60px] flex-wrap">
@@ -212,7 +211,7 @@ const Hero = () => {
         </div>
 
         {/* กิจกรรมล่าสุด */}
-        <div className=" py-12">
+        <div className="py-12">
           <div className="max-w-6xl mx-auto px-4 mb-8">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">กิจกรรมล่าสุด</h1>
           </div>
@@ -250,7 +249,7 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* กิจกรรมที่ 2 — FIX: space--5 → space-y-5 */}
+            {/* กิจกรรมที่ 2 */}
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 max-w-6xl mx-auto px-4">
               <div className="relative w-full md:w-[640px] h-[220px] md:h-[320px] mt-8 md:mt-15">
                 <Image src="/Container2.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl"/>
@@ -283,7 +282,7 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* กิจกรรมที่ 3 — FIX: space--5 → space-y-5 */}
+            {/* กิจกรรมที่ 3 */}
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 max-w-6xl mx-auto px-4">
               <div className="relative w-full md:w-[640px] h-[220px] md:h-[320px] mt-8 md:mt-15">
                 <Image src="/Container3.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl"/>
@@ -316,7 +315,7 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* กิจกรรมที่ 4 — FIX: space--5 → space-y-5 */}
+            {/* กิจกรรมที่ 4 */}
             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-10 max-w-6xl mx-auto px-4">
               <div className="relative w-full md:w-[640px] h-[220px] md:h-[320px] mt-8 md:mt-15">
                 <Image src="/Container4.png" alt="ส่งกิจกรรม" fill className="object-cover rounded-xl"/>
@@ -350,13 +349,24 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Review — FIX: bg-linear-to-r → bg-gradient-to-r */}
-          <div className="bg-[#000523] min-h-screen mt-5 pb-20 justify-center items-center">
-            <div className="relative bg-[white]">
-              <svg viewBox="0 0 1200 320" preserveAspectRatio="none" className="absolute w-full h-50">
-                <path fill="white" transform="scale(1,-1) translate(0,-320)" d="M 1 62 C 19 235 347 54 475 62 L 700 62 C 898 63 1103 121 1200 318 L 1200 320 L 0 320 Z"/>
-              </svg>
-            </div>
+          {/* Curved transition shape ก่อน Review section */}
+        <div className="relative w-500 h-250 overflow-hidden -mt-90">
+          <svg 
+            viewBox="0 0 152 100" 
+            /* preserveAspectRatio="none" สำคัญมากเพื่อให้ยืดเต็มความกว้าง div */
+            preserveAspectRatio="none" 
+            className="absolute bottom-0 left-0 w-full h-full block"
+          >
+            <path 
+              fill="#000523" 
+              /* พิกัดที่ปรับให้สมดุลตามรูป S-Curve ของคุณ */
+              d="M 0 0 C 40 150, 110 -50, 152 100 L 152 100 L 0 100 Z" 
+            />
+          </svg>
+        </div>
+
+          {/* Review */}
+          <div className="bg-[#000523] min-h-screen pb-20 justify-center items-center">
             <div className="relative h-120 w-240 items-center justify-center ml-135">
               <Image src="/Section.png" alt="Section" fill className="object-cover mt-60"/>
             </div>
@@ -436,9 +446,9 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Box search — FIX: bg-linear-to-b → bg-gradient-to-b */}
+          {/* Box search */}
           <div className="bg-search min-h-screen flex items-center justify-center bg-[#000523]">
-            <div className="flex flex-col items-center text-center gap-6" >
+            <div className="flex flex-col items-center text-center gap-6">
               <div className="text-6xl md:text-7xl font-extrabold tracking-tight flex">
                 <h1 className="bg-gradient-to-b from-white to-white/40 bg-clip-text text-transparent">Fastcamp</h1>
                 <h1 className="text-white/90">ให้อะไรกับคุณ ?</h1>
