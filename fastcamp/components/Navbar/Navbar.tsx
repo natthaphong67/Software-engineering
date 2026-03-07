@@ -16,8 +16,8 @@ export default function Navbar() {
 
   const navItems = [
   { name: "Home", href: "/" },
-  { name: "category", href: "/Category" },
-  { name: "ส่งกิจกรรมขึ้นเว็บ", href: "/Form" },
+  { name: "category", href: "/Page/Category" },
+  { name: "ส่งกิจกรรมขึ้นเว็บ", href: "/Page/LandingPage" },
 ];
 
   // Close popup when clicking outside
