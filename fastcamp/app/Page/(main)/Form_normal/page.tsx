@@ -5,6 +5,20 @@ import { useEffect, useState, useRef } from "react";
 import MyDatePicker from "./DataTime";
 import Footer from "@/components/footer/Footer";
 
+function SidebarItem({ icon, text, active, onClick }: any) {
+  return (
+    <div
+      onClick={onClick}
+      className={`w-[340px] h-[51px] flex items-center gap-3 px-6 rounded-2xl cursor-pointer transition-colors ${
+        active ? "bg-[#1B2144] text-white" : "border hover:bg-gray-50"
+      }`}
+    >
+      <Image src={icon} width={22} height={22} alt="" />
+      {text}
+    </div>
+  );
+}
+
 type CheckboxProps = {
   label: string;
 };
@@ -19,20 +33,45 @@ function Checkbox({ label }: CheckboxProps) {
 }
 
 export default function Box_file() {
+  const [activeSection, setActiveSection] = useState("organizer");
+
+  const sectionRefs = {
+    organizer: useRef<HTMLDivElement>(null),
+    social: useRef<HTMLDivElement>(null),
+    overview: useRef<HTMLDivElement>(null),
+    details: useRef<HTMLDivElement>(null),
+  };
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    Object.entries(sectionRefs).forEach(([key, ref]) => {
+      if (!ref.current) return;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveSection(key);
+        },
+        { threshold: 0.3 }
+      );
+      observer.observe(ref.current);
+      observers.push(observer);
+    });
+
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
   return (
     <div>
       {/* Hero */}
-      <section className="bg-gradient-to-r from-[#000523] via-[#1B2144] to-[#000523] min-h-[40vh] w-full flex flex-col items-center justify-center px-4 text-center">
-        {/* Badge */}
-        <div className="bg-[#CACACA]/30 border border-gray-600 rounded-full px-4 py-1 mb-4">
+      <section className="bg-[#000523] bg-[radial-gradient(circle,_#ffffff33_0%,_#000523_70%)] pt-30 rounded-b-[55px] min-h-[40vh] w-full flex flex-col items-center justify-center px-4 pb-20 text-center">        {/* Badge */}
+        <div className="bg-[#CACACA]/30 border border-gray-600 rounded-full px-4 py-1 mb-15">
           <p className="text-white text-sm sm:text-base">List Your Camp</p>
         </div>
         {/* Title */}
-        <h1 className="font-bold bg-gradient-to-r from-[#F3F4F6] to-[#9CA3AF] bg-clip-text text-transparent text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
+        <h1 className="font-bold bg-gradient-to-r mb-5 from-[#F3F4F6] to-[#9CA3AF] bg-clip-text text-transparent  text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl">
           Camp Submission
         </h1>
         {/* Subtitle */}
-        <p className="text-white font-light mt-4 max-w-xl text-sm sm:text-base md:text-lg">
+        <p className="text-white font-light mt-4 mb-5 text-sm sm:text-base md:text-lg">
           กรอกข้อมูลรายละเอียดด้านล่าง เพื่อนำกิจกรรมของคุณขึ้นสู่แพลตฟอร์ม Fastcamp
         </p>
       </section>
@@ -54,11 +93,18 @@ export default function Box_file() {
 
             {/* SIDEBAR - sticky ครอบคลุมทุก section */}
             <div className="hidden lg:block w-[320px] flex-shrink-0">
-              <div className="sticky top-[120px] space-y-4">
-                <SidebarItem active icon="/Icon finger.png" text="Organizer Info" />
-                <SidebarItem icon="/Icon social.png" text="Social Media Content" />
-                <SidebarItem icon="/Icon calender.png" text="Activity Overview" />
-                <SidebarItem icon="/Icon light.png" text="Full Activity Details" />
+              <div className="sticky top-[120px] space-y-4"><SidebarItem active={activeSection === "organizer"} icon="/Icon finger.png" text="Organizer Info"
+  onClick={() => sectionRefs.organizer.current?.scrollIntoView({ behavior: "smooth" })} />
+
+<SidebarItem active={activeSection === "social"} icon="/Icon social.png" text="Social Media Content"
+  onClick={() => sectionRefs.social.current?.scrollIntoView({ behavior: "smooth" })} />
+
+<SidebarItem active={activeSection === "overview"} icon="/Icon calender.png" text="Activity Overview"
+  onClick={() => sectionRefs.overview.current?.scrollIntoView({ behavior: "smooth" })} />
+
+<SidebarItem active={activeSection === "details"} icon="/Icon light.png" text="Full Activity Details"
+  onClick={() => sectionRefs.details.current?.scrollIntoView({ behavior: "smooth" })} />
+
               </div>
             </div>
 
@@ -66,7 +112,7 @@ export default function Box_file() {
             <div className="flex-1">
 
               {/* Section 1 - Organizer Info */}
-              <div className="w-full max-w-[820px] mb-16">
+              <div ref={sectionRefs.organizer} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-xl md:text-2xl font-bold text-[#1B2044]">
                   ข้อมูลผู้ประสานงานกิจกรรม
                   <span className="text-[#1B2044] font-bold ml-2">(Organizer Info)</span>
@@ -115,7 +161,7 @@ export default function Box_file() {
               </div>
 
               {/* Section 2 - Social Media Content */}
-              <div className="w-full max-w-[820px] mb-16">
+              <div ref={sectionRefs.social} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1B2044]">
                   ข้อความพาดหัวและรูปภาพสำหรับประชาสัมพันธ์
                   <span className="text-[#1B2044] font-medium ml-2">(Social Media Content)</span>
@@ -174,7 +220,7 @@ export default function Box_file() {
               </div>
 
               {/* Section 3 - Activity Overview */}
-              <div className="w-full max-w-[820px] mb-16">
+              <div ref={sectionRefs.overview} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1B2044]">
                   รายละเอียดกิจกรรมทั้งหมด
                   <span className="text-[#1B2044] font-medium ml-2">(Full Activity Details)</span>
@@ -377,7 +423,7 @@ export default function Box_file() {
               </div>
 
               {/* Section 4 - Full Activity Details */}
-              <div className="w-full max-w-[820px] mb-16">
+              <div ref={sectionRefs.details} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-[28px] font-bold text-[#1B2144]">
                   ข้อมูลกิจกรรมโดยละเอียด
                   <span className="font-medium ml-2">(Full Activity Details)</span>
@@ -426,15 +472,3 @@ export default function Box_file() {
   );
 }
 
-function SidebarItem({ icon, text, active }: any) {
-  return (
-    <div
-      className={`w-[340px] h-[51px] flex items-center gap-3 px-6 rounded-2xl ${
-        active ? "bg-[#1B2144] text-white" : "border"
-      }`}
-    >
-      <Image src={icon} width={22} height={22} alt="" />
-      {text}
-    </div>
-  );
-}

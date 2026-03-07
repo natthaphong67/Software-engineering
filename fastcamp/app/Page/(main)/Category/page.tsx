@@ -4,7 +4,7 @@ const Category = () => {
   return (
     <div>
       {/* Hero */}
-      <div className="relative mt-7 mx-auto max-w-[97%] aspect-[1866/918] overflow-hidden rounded-4xl bg-gradient-to-r from-[#280C3C] via-[#000523] to-[#003376]">
+      <div className="relative mt-5 mx-auto max-w-[97%] aspect-[1866/918] overflow-hidden rounded-4xl bg-gradient-to-r from-[#280C3C] via-[#000523] to-[#003376]">
         {/* TEXT */}
         <div className="absolute top-16 md:top-28 lg:top-32 left-1/2 -translate-x-1/2 text-center z-20 px-4">
           <h1 className="font-black bg-gradient-to-r from-white via-neutral-400 to-gray-600 bg-clip-text text-transparent text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-none">

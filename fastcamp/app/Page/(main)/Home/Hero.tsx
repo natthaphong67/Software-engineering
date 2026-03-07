@@ -1,11 +1,12 @@
 import Image from "next/image";
 import Review from "./review";
+import Footer from "@/components/footer/Footer";
 
 const Hero = () => {
   return (
-    <div className="relative bg-[#000523] overflow-hidden">
+    <div className="relative  bg-[#000523] overflow-hidden">
       {/* TEXT FAST CAMP */}
-      <div className="relative md:absolute inset-0 flex justify-center pt-20 md:pt-40 z-10">
+      <div className="relative md:absolute inset-0 flex justify-center pt-20 md:pt-40 z-20">
         <div className="flex gap-6 md:gap-50 font-black tracking-tighter leading-none text-[48px] sm:text-[72px] md:text-[200px]
           bg-gradient-to-r from-white via-gray-300  to-gray-400 bg-clip-text
           text-transparent mt-10 md:mt-35 drop-shadow-[0_0_25px_rgba(255,255,255,0.25)]">
@@ -31,8 +32,8 @@ const Hero = () => {
       </div>
 
       {/* WHITE SECTION */}
-      <div className="bg-white mt-90 justify-center items-center">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 p-2 justify-items-center">
+<div className="relative bg-white mt-90 overflow-hidden justify-center items-center pb-0">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 p-2 justify-items-center">
 
           {/*BOX นิทรรศการ/เปิดบ้าน */}
           <div className="relative w-full max-w-[160px] sm:max-w-[220px] md:max-w-[260px] lg:max-w-[305px] aspect-[305/306] rounded-[20px] sm:rounded-[26px] lg:rounded-[32px] bg-gradient-to-b from-[#5f8fc5] to-[#3f6fa4] p-[8px] sm:p-[10px] lg:p-[12px] shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
@@ -184,7 +185,7 @@ const Hero = () => {
         </div>
 
         {/* Why Trust */}
-        <div className="w-full bg-white py-[80px]">
+        <div className="w-full py-[80px]">
           <h2 className="text-center text-[32px] md:text-[36px] font-bold text-[#0B0F2B]">Why Trust Our Platform?</h2>
           <div className="flex justify-center gap-[120px] mt-[60px] flex-wrap">
             <div className="flex flex-col items-center">
@@ -212,7 +213,7 @@ const Hero = () => {
         </div>
 
         {/* กิจกรรมล่าสุด */}
-        <div className="py-12 ">
+        <div className="py-12 relative z-10 ">
           <div className="max-w-6xl mx-auto px-4 mb-8">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">กิจกรรมล่าสุด</h1>
           </div>
@@ -347,16 +348,17 @@ const Hero = () => {
                   </div>
                 </button>
               </div>
+              </div>  
             </div>
           </div>
 
           {/* Curved transition shape ก่อน Review section */}
-        <div className="relative w-500 h-250 overflow-hidden -mt-90">
-          <svg 
+          <div className="absolute  left-0 w-[1800px] h-[500px] z-0 pointer-events-none -mt-80 " >
+            <svg 
             viewBox="0 0 152 100" 
             /* preserveAspectRatio="none" สำคัญมากเพื่อให้ยืดเต็มความกว้าง div */
             preserveAspectRatio="none" 
-            className="absolute bottom-0 left-0 w-full h-full block"
+            className="absolute bottom-0 left-0 w-full h-full block z-[-1]"
           >
             <path 
               fill="#000523" 
@@ -365,7 +367,7 @@ const Hero = () => {
             />
           </svg>
         </div>
-
+        </div>
           {/* Review */}
           <Review/>
 
@@ -388,9 +390,13 @@ const Hero = () => {
               </div>
             </div>
           </div>
-        </div>
+        
+        <Footer/>
+
       </div>
-    </div>
+
+
+
   );
 };
 

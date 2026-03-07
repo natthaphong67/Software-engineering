@@ -464,11 +464,13 @@ export default function Box_file() {
   );
 }
 
-function SidebarItem({ icon, text, active }: any) {
+
+function SidebarItem({ icon, text, active, onClick }: any) {
   return (
     <div
-      className={`w-[340px] h-[51px] flex items-center gap-3 px-6 rounded-2xl ${
-        active ? "bg-[#1B2144] text-white" : "border"
+      onClick={onClick}
+      className={`w-[340px] h-[51px] flex items-center gap-3 px-6 rounded-2xl cursor-pointer transition-colors ${
+        active ? "bg-[#1B2144] text-white" : "border hover:bg-gray-50"
       }`}
     >
       <Image src={icon} width={22} height={22} alt="" />
