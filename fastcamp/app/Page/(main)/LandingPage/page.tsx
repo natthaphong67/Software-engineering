@@ -1,33 +1,29 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Footer from "@/components/footer/Footer";
 
 const CARDS = [
   {
-    icon: "🔗",
-    color: "blue",
     title: "ช่องทางการส่งข้อมูล (Official Channel)",
-    body: "พื้นที่นี้เปิดให้ผู้จัดงานทุกประเภทสามารถส่งข้อมูลค่ายผ่านช่องทางที่กำหนดเท่านั้น เพื่อให้มั่นใจว่าข้อมูลที่แสดงบนแพลตฟอร์มนั้นผ่านการตรวจสอบและมีคุณภาพครบถ้วน",
+    items: [
+      "เพื่อประสิทธิภาพสูงสุดในการจัดการข้อมูล Fastcamp รับข้อมูลผ่านแบบฟอร์มบนเว็บไซต์เท่านั้น เราขอสงวนสิทธิ์ไม่พิจารณาข้อมูลที่ส่งผ่านช่องทางอื่น เพื่อรักษามาตรฐานความถูกต้องของระบบ",
+    ],
   },
   {
-    icon: "✅",
-    color: "green",
     title: "มาตรฐานการอนุมัติกิจกรรม (Approval Criteria)",
-    body: "กิจกรรมทุกประเภทที่ถูกนำเข้าสู่ระบบจะต้องผ่านกระบวนการพิจารณาจากทีมงาน โดยพิจารณาจากความเหมาะสมของเนื้อหา ความน่าเชื่อถือของผู้จัด และความปลอดภัยของผู้เข้าร่วม",
+    items: [
+      "กิจกรรมที่จะได้รับการเผยแพร่ต้องมีรายละเอียดที่ชัดเจนและครบถ้วนสมบูรณ์ ทีมงานขอสงวนสิทธิ์ไม่อนุมัติกิจกรรมที่มีข้อมูลไม่เพียงพอ โดยอาจไม่ได้แจ้งให้ทราบล่วงหน้า เพื่อให้ทุกกิจกรรมบนแพลตฟอร์มของเรามีคุณภาพระดับสูงสุด",
+    ],
   },
   {
-    icon: "🔒",
-    color: "purple",
-    title: "การรองรับข้อมูล (Data Integrity & Privacy)",
-    body: "ข้อมูลที่ถูกส่งเข้ามาจะได้รับการปกป้องตามนโยบายความเป็นส่วนตัวที่เข้มงวด (Privacy Policy) และจะไม่ถูกนำไปใช้เพื่อวัตถุประสงค์อื่นนอกจากการแสดงผลบนแพลตฟอร์ม",
+    title: "การยอมรับข้อตกลง (Data Integrity & Privacy)",
+    items: [
+      "การส่งข้อมูลผ่านแบบฟอร์มนี้ ถือเป็นการยืนยันว่าคุณยอมรับนโยบายความเป็นส่วนตัว (Privacy Policy) ของ Fastcamp โดยให้มีผลบังคับใช้ในทันที",
+    ],
   },
 ];
-
-const iconColor: Record<string, string> = {
-  blue: "rgba(59,130,246,0.2)",
-  green: "rgba(34,197,94,0.2)",
-  purple: "rgba(162,89,255,0.2)",
-};
 
 function Stars() {
   const stars = Array.from({ length: 60 }, (_, i) => ({
@@ -38,20 +34,12 @@ function Stars() {
     opacity: Math.random() * 0.5 + 0.2,
   }));
   return (
-    <div style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+    <div className="absolute inset-0 pointer-events-none">
       {stars.map((s) => (
         <div
           key={s.id}
-          style={{
-            position: "absolute",
-            left: `${s.x}%`,
-            top: `${s.y}%`,
-            width: s.size,
-            height: s.size,
-            borderRadius: "50%",
-            background: "#fff",
-            opacity: s.opacity,
-          }}
+          className="absolute rounded-full bg-white"
+          style={{ left: `${s.x}%`, top: `${s.y}%`, width: s.size, height: s.size, opacity: s.opacity }}
         />
       ))}
     </div>
@@ -75,242 +63,179 @@ function GlobeSection() {
   }, []);
 
   return (
-    <div style={{ position: "relative", width: "min(280px, 44vw)", margin: "0 auto" }}>
-      {/* Glow behind globe */}
-      <div
-        style={{
-          position: "absolute",
-          inset: "-40%",
-          borderRadius: "50%",
-          background:
-            "radial-gradient(ellipse, rgba(130,70,255,0.45) 0%, rgba(80,30,200,0.2) 45%, transparent 70%)",
-          filter: "blur(8px)",
-          animation: "pulse 4s ease-in-out infinite",
-        }}
-      />
+
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/The_Earth_seen_from_Apollo_17.jpg/600px-The_Earth_seen_from_Apollo_17.jpg"
+        src="/Image/4.หน้าส่งค่ายขึ้นเว็บ/image (1).png"
         alt="globe"
+        className="w-full block relative"
         style={{
-          width: "100%",
-          display: "block",
-          borderRadius: "50%",
-          position: "relative",
           transform: `translateY(${float}px)`,
-          filter:
-            "drop-shadow(0 0 36px rgba(140,80,255,0.8)) drop-shadow(0 0 70px rgba(100,50,220,0.4))",
-          transition: "transform 0.05s linear",
+          width: `70%`,
         }}
       />
-      {/* Ground ring */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: -10,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "85%",
-          height: 20,
-          background: "radial-gradient(ellipse, rgba(160,100,255,0.4) 0%, transparent 70%)",
-          borderRadius: "50%",
-          filter: "blur(6px)",
-        }}
-      />
-    </div>
   );
 }
 
-function CriteriaCard({
-  icon,
-  color,
-  title,
-  body,
-  delay,
-}: {
-  icon: string;
-  color: string;
-  title: string;
-  body: string;
-  delay: number;
-}) {
-  const [hovered, setHovered] = useState(false);
-
+function CriteriaSection() {
   return (
-    <div
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+    <div 
+      className="rounded-2xl p-8 border border-white/[0.08]"
       style={{
-        background: hovered ? "rgba(255,255,255,0.06)" : "rgba(255,255,255,0.03)",
-        border: `1px solid ${hovered ? "rgba(162,89,255,0.35)" : "rgba(255,255,255,0.08)"}`,
-        borderRadius: 16,
-        padding: "20px 22px",
-        marginBottom: 14,
-        transition: "all 0.25s ease",
-        animationDelay: `${delay}ms`,
-        cursor: "default",
+        // ผสมสี RGBA เพื่อให้ได้ความเข้ม 16% (0.16)
+        background: "linear-gradient(135deg, rgba(97, 16, 159, 0.16) 0%, rgba(129, 202, 255, 0.1) 100%)"
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-        <div
-          style={{
-            width: 34,
-            height: 34,
-            borderRadius: 9,
-            background: iconColor[color],
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 16,
-            flexShrink: 0,
-          }}
-        >
-          {icon}
+      {CARDS.map((card, i) => (
+        <div key={i} className="flex gap-5 relative">
+          {/* Timeline column */}
+          <div className="flex flex-col items-center shrink-0">
+            <div
+              className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 z-10"
+              style={{
+                background: "linear-gradient(135deg, #61109F, #1a1aff)",
+                boxShadow: "0 0 16px rgba(80,100,255,0.3)",
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 9l6 6 6-6" />
+                <path d="M6 4l6 6 6-6" />
+              </svg>
+            </div>
+            {i < CARDS.length - 1 && (
+              <div
+                className="w-0.5 flex-1 my-1"
+                style={{
+                  minHeight: 40,
+                  background: "linear-gradient(180deg, rgba(129, 202, 255, 0.4), rgba(255,255,255,0.05))",
+                }}
+              />
+            )}
+          </div>
+
+          {/* Content */}
+          <div className={`flex-1 ${i < CARDS.length - 1 ? "pb-7" : ""}`}>
+            <h3 className="font-bold text-slate-100 mb-2 pt-2.5" style={{ fontSize: "clamp(0.95rem,2vw,1.1rem)" }}>
+              {card.title}
+            </h3>
+            
+            {/* กล่องเนื้อหาแบบโปร่งแสงเล็กน้อย */}
+            <div className="flex gap-3.5 items-start bg-white/[0.04] border border-white/[0.06] rounded-xl p-4">
+              <div
+                className="w-6 h-6 rounded-full shrink-0 flex items-center justify-center text-[0.7rem] font-bold text-white mt-0.5"
+                style={{
+                  background: "rgba(97, 16, 159, 0.5)", 
+                  border: "1px solid rgba(255,255,255,0.2)",
+                }}
+              >
+                {i + 1}
+              </div>
+              <p className="text-sm text-slate-300 leading-relaxed m-0">
+                {card.items[0]}
+              </p>
+            </div>
+          </div>
         </div>
-        <span style={{ fontWeight: 600, fontSize: "0.95rem" }}>{title}</span>
-      </div>
-      <div style={{ paddingLeft: 46 }}>
-        <span style={{ display: "inline-block", width: 6, height: 6, borderRadius: "50%", background: "#a259ff", marginRight: 8, verticalAlign: "middle" }} />
-        <span style={{ fontSize: "0.82rem", color: "#94a3b8", lineHeight: 1.8 }}>{body}</span>
-      </div>
+      ))}
     </div>
   );
 }
 
 export default function LandingPage() {
   return (
-    <div
-      style={{
-        background: "#07091a",
-        color: "#e2e8f0",
-        minHeight: "100vh",
-        fontFamily: "'Noto Sans Thai', 'Sarabun', sans-serif",
-        overflowX: "hidden",
-      }}
-    >
+    <div className="bg-[#000622] text-slate-200 min-h-screen overflow-x-hidden" style={{ fontFamily: "'Noto Sans Thai', 'Sarabun', sans-serif" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Noto+Sans+Thai:wght@300;400;600;700;900&display=swap');
         @keyframes pulse {
           0%,100% { opacity:0.7; transform:scale(1); }
           50% { opacity:1; transform:scale(1.08); }
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
       `}</style>
 
       {/* ── HERO ── */}
-      <section
-        style={{
-          position: "relative",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          textAlign: "center",
-          padding: "60px 24px 80px",
-          overflow: "hidden",
-        }}
-      >
+      <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 py-[60px] overflow-hidden">
         <Stars />
 
         {/* Text block */}
-        <div style={{ position: "relative", zIndex: 2, marginBottom: 40 }}>
-          <p style={{ fontSize: "clamp(0.95rem,3vw,1.2rem)", fontWeight: 400, marginBottom: 8 }}>
+        <div className="relative z-10 mt-10 mb-10">
+          <p className="font-bold mb-2" style={{ fontSize: "50px" }}>
             เพราะค่ายที่ดีที่สุด
           </p>
           <h1
-            style={{
-              fontSize: "clamp(1.5rem,5vw,2.6rem)",
-              fontWeight: 700,
-              color: "#f5c842",
-              lineHeight: 1.35,
-              marginBottom: 18,
-            }}
+            className="font-bold text-[#0024FF] leading-snug mb-[18px]"
+            style={{ fontSize: "clamp(1.5rem,5vw,2.6rem)" }}
           >
             คือค่ายที่ถูกค้นพบในเวลาที่ใช่ที่สุด
           </h1>
-          <p style={{ fontSize: "clamp(0.8rem,2vw,0.92rem)", color: "#94a3b8", lineHeight: 1.85, maxWidth: 480, margin: "0 auto 6px" }}>
-            ยกระดับการเข้าถึงกลุ่มเป้าหมายให้เหนือชั้นกว่าที่เคย{" "}
-            <span style={{ color: "#3B0AFF", fontWeight: 600 }}>Fastcamp</span>
+<p
+            className="text-slate-400 leading-tight max-w-max mx-auto mb-1"
+            style={{ fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)" }}
+          >
+            ยกระดับการเข้าถึงกลุ่มเป้าหมายให้เหนือชั้นกว่าที่เคย
           </p>
-          <p style={{ fontSize: "0.78rem", color: "#94a3b8", maxWidth: 400, margin: "0 auto 28px" }}>
-            พื้นที่รวบรวมค่ายที่เปิดรับสมัครทุกประเภทในไทยไว้ครบ
+          <p 
+            className="text-slate-400 max-w-max mx-auto mb-1"
+            style={{ fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)" }}
+          >
+            ส่งค่ายของคุณมาที่{" "}
+            <span 
+              className="text-[#0024FF] font-bold" 
+              style={{ fontSize: "1.2em" }}
+            >
+              Fastcamp
+            </span>
+          </p>          
+          <p 
+            className="text-slate-400 max-w-max mx-auto mb-1 whitespace-nowrap"
+            style={{ fontSize: "clamp(0.85rem, 1.8vw, 1.05rem)" }}
+          >
+            พื้นที่รวบรวมค่ายชั้นนำเพื่อสร้างมาตรฐานใหม่ให้โลกแห่งการเรียนรู้ที่ไม่มีวันสิ้นสุด
           </p>
 
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            {["สมัครสมาชิกฟรี!", "สมัครกิจกรรมของเรา!"].map((label) => (
-              <button
-                key={label}
-                style={{
-                  padding: "10px 24px",
-                  borderRadius: 999,
-                  border: "1.5px solid rgba(255,255,255,0.12)",
-                  background: "rgba(255,255,255,0.06)",
-                  color: "#e2e8f0",
-                  fontFamily: "inherit",
-                  fontSize: "0.82rem",
-                  cursor: "pointer",
-                  backdropFilter: "blur(8px)",
-                  transition: "all 0.2s",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.background = "rgba(162,89,255,0.2)";
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = "#a259ff";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.06)";
-                  (e.currentTarget as HTMLButtonElement).style.borderColor = "rgba(255,255,255,0.12)";
-                }}
-              >
-                {label}
-              </button>
+          <div className="flex gap-3 justify-center flex-wrap">
+            {[
+              { label: "ส่งข้อมูลกิจกรรมทั่วไป", href: "/Page/Form_competition" },
+              { label: "ส่งข้อมูลกิจกรรมแข่งขัน!", href: "/Page/Form_competition" },
+            ].map(({ label, href }) => (
+              <Link key={label} href={href} className="no-underline">
+                <button
+                  className="px-6 py-2.5 rounded-full border border-white/[0.12] bg-white/[0.06] text-slate-200 text-[0.82rem] cursor-pointer backdrop-blur-[8px] transition-all duration-200 hover:bg-purple-500/20 hover:border-purple-400"
+                  style={{ fontFamily: "inherit" }}
+                >
+                  {label}
+                </button>
+              </Link>
             ))}
           </div>
         </div>
 
-        {/* Globe */}
         <GlobeSection />
       </section>
 
       {/* ── DIVIDER ── */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, padding: "20px 24px" }}>
-        <div style={{ height: 1, width: 80, background: "linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)" }} />
+      <div className="flex items-center justify-center gap-3 py-5 px-6">
+        <div className="h-px w-20 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
         <span
-          style={{
-            background: "linear-gradient(135deg,#a259ff,#6366f1)",
-            padding: "5px 18px",
-            borderRadius: 999,
-            fontSize: "0.7rem",
-            fontWeight: 600,
-            letterSpacing: "0.08em",
-            color: "#fff",
-            textTransform: "uppercase",
-          }}
+          className="px-[18px] py-[5px] rounded-full text-[0.7rem] font-semibold tracking-[0.08em] text-white uppercase"
+          style={{ background: "linear-gradient(135deg,#a259ff,#6366f1)" }}
         >
-          Built For Camp
+          How to List Your Camp
         </span>
-        <div style={{ height: 1, width: 80, background: "linear-gradient(90deg,rgba(255,255,255,0.1),transparent)" }} />
+        <div className="h-px w-20 bg-gradient-to-r from-white/10 to-transparent" />
       </div>
 
       {/* ── CRITERIA ── */}
-      <section style={{ maxWidth: 720, margin: "0 auto", padding: "16px 24px 80px" }}>
+      <section className="max-w-[720px] mx-auto px-6 pb-20 pt-4">
         <h2
-          style={{
-            fontSize: "clamp(1.15rem,3.5vw,1.5rem)",
-            fontWeight: 700,
-            textAlign: "center",
-            marginBottom: 6,
-          }}
+          className="font-bold text-center mb-1.5"
+          style={{ fontSize: "clamp(1.15rem,3.5vw,1.5rem)" }}
         >
           ข้อกำหนดและมาตรฐานการจัดสรรข้อมูลกิจกรรม
         </h2>
-        <p style={{ textAlign: "center", fontSize: "0.76rem", color: "#94a3b8", marginBottom: 32 }}>
+        <p className="text-center text-xs text-slate-400 mb-8">
           (Last Updated: 1 Jan 2025)
         </p>
-
-        {CARDS.map((card, i) => (
-          <CriteriaCard key={i} {...card} delay={i * 80} />
-        ))}
+        <CriteriaSection />
       </section>
+      <Footer/>
     </div>
   );
 }

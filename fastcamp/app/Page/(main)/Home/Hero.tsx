@@ -353,7 +353,7 @@ const Hero = () => {
           </div>
 
           {/* Curved transition shape ก่อน Review section */}
-          <div className="absolute  left-0 w-[1800px] h-[500px] z-0 pointer-events-none -mt-80 " >
+          <div className="absolute  left-0 w-[2200px] h-[500px] z-0 pointer-events-none -mt-75 " >
             <svg 
             viewBox="0 0 152 100" 
             /* preserveAspectRatio="none" สำคัญมากเพื่อให้ยืดเต็มความกว้าง div */

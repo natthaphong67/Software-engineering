@@ -20,6 +20,8 @@ export default function Navbar() {
   const navBg: Record<string, string> = {
     "/": "bg-transparent",
     "/Page/Category": "bg-transparent mt-5",
+    "/Page/LandingPage": "bg-transparent ",
+
   };
 
   const bgClass = navBg[pathname] ?? "";
