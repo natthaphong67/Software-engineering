@@ -59,7 +59,7 @@ export default function Navbar() {
     <span className="text-xl font-semibold text-white ">FastCamp</span>
 
       {/* Nav links */}
-      <ul className="hidden md:flex items-center gap-14">
+      <ul className="hidden md:flex items-center gap-14 absolute left-1/2 -translate-x-1/2">
         {navItems.map((item) => (
           <li key={item.name}>
             <Link href={item.href}>
