@@ -22,3 +22,7 @@ input[type="date"]:focus::-webkit-datetime-edit {
 color: black;
 
 }
+
+* {
+  font-family: var(--font-thai), sans-serif;
+}

@@ -192,7 +192,7 @@ export default function LandingPage() {
 
           <div className="flex gap-3 justify-center flex-wrap">
             {[
-              { label: "ส่งข้อมูลกิจกรรมทั่วไป", href: "/Page/Form_competition" },
+              { label: "ส่งข้อมูลกิจกรรมทั่วไป", href: "/Page/Form_normal" },
               { label: "ส่งข้อมูลกิจกรรมแข่งขัน!", href: "/Page/Form_competition" },
             ].map(({ label, href }) => (
               <Link key={label} href={href} className="no-underline">

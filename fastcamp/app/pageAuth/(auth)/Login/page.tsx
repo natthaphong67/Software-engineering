@@ -1,4 +1,46 @@
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+
+
+
 const Login = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = async (e: React.FormEvent) => {
+      e.preventDefault();
+
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert("Login failed");
+          return;
+        }
+
+        // ✅ set cookie
+        document.cookie = `token=${data.token}; path=/`;
+
+        // ✅ redirect
+        router.push("/Page/Home");
+
+      } catch (err) {
+        console.error(err);
+        alert("Error");
+      }
+    };
+
+    
   return (
     <div className="min-h-screen w-full flex">
       {/* ซ้าย */}
@@ -31,7 +73,7 @@ const Login = () => {
       {/* ขวา */}
       <div className="relative flex w-full lg:w-1/2 items-center justify-center bg-white">
         {/* Close Button */}
-        <button className="absolute top-6 right-6 text-gray-400 hover:text-black text-xl">✕</button>
+        <button onClick={() => router.push('/Page/Home')} className="absolute top-6 right-6 text-gray-400 hover:text-black text-xl">✕</button>
 
         <div className="w-full max-w-sm">
           <h2 className="text-2xl font-bold text-center">Welcome Back</h2>
@@ -39,11 +81,14 @@ const Login = () => {
             Sign in to your account
           </p>
 
-          <form className="space-y-5">
+          <form onSubmit={handleLogin} className="space-y-5">
             {/* Email */}
             <div>
+              
               <label className="text-sm font-medium">Email</label>
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="Enter your Email"
                 className="mt-1 w-full rounded-full border border-blue-200 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
@@ -54,6 +99,8 @@ const Login = () => {
             <div>
               <label className="text-sm font-medium">Password</label>
               <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="Enter your password"
                 className="mt-1 w-full rounded-full border border-blue-200 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500"
@@ -62,11 +109,7 @@ const Login = () => {
 
             {/* Options */}
             <div className="flex items-center justify-between text-sm">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" className="accent-blue-500" />
-                Remember me
-              </label>
-              <a href="/Page/Reset-password" className="text-blue-500 hover:underline">
+              <a href="/pageAuth/Reset-password" className="text-blue-500 hover:underline">
                 Forgot Password
               </a>
             </div>
@@ -79,7 +122,7 @@ const Login = () => {
 
           <p className="mt-6 text-center text-sm text-gray-500">
             Don&apos;t have an account?{" "}
-            <a href="/Page/Register" className="text-blue-500 font-medium hover:underline">
+            <a href="/pageAuth/Register" className="text-blue-500 font-medium hover:underline">
               Sign up
             </a>
           </p>
