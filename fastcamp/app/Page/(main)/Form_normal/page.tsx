@@ -87,6 +87,7 @@ export default function Box_file() {
   const [submitting, setSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [activeSection, setActiveSection] = useState("organizer");
+  const [deadlineError, setDeadlineError] = useState("");
 
   const sectionRefs = {
     organizer: useRef<HTMLDivElement>(null),
@@ -115,47 +116,95 @@ export default function Box_file() {
 
   const handleSubmit = async () => {
     if (submitting) return;
+
+    if (form.registration_deadline && form.event_date && form.registration_deadline >= form.event_date) {
+      setSubmitResult({ ok: false, message: "❌ วันปิดรับสมัครต้องก่อนวันจัดกิจกรรม" });
+      return;
+    }
+
     setSubmitting(true);
     setSubmitResult(null);
     try {
       const fd = new FormData();
-      fd.append("camp_type", "general");
-      fd.append("title", form.title); fd.append("tagline", form.tagline);
-      fd.append("description", form.description); fd.append("location", form.location);
+
+      // ── camps table ──────────────────────────────────────────────────────────
+      fd.append("type", "general");
+      fd.append("title", form.title);
+      fd.append("tagline", form.tagline);
+      fd.append("description", form.description);
+      fd.append("location", form.location);
       fd.append("event_date", form.event_date ? form.event_date.toISOString() : "");
       fd.append("registration_deadline", form.registration_deadline ? form.registration_deadline.toISOString() : "");
+      fd.append("contact_name", form.organizer_name || `${form.first_name} ${form.last_name}`.trim());
       fd.append("organizer_name", form.organizer_name || `${form.first_name} ${form.last_name}`.trim());
-      fd.append("contact_email", form.contact_email); fd.append("contact_phone", form.contact_phone);
-      fd.append("activity_types", form.activity_types.join(","));
+      fd.append("contact_email", form.contact_email);
+      fd.append("contact_phone", form.contact_phone);
+      fd.append("application_link", form.application_link);
+      fd.append("category", form.activity_types.join(","));
       fd.append("event_format", form.event_format.join(","));
-      fd.append("event_date_note", form.event_date_note); fd.append("capacity", form.capacity);
-      fd.append("entry_fee", form.entry_fee); fd.append("fee_type", form.fee_type.join(","));
-      fd.append("participant_level", form.participant_level.join(","));
-      fd.append("age_range", form.age_range.join(","));
-      fd.append("academic_track", form.academic_track.join(","));
-      fd.append("academic_other", form.academic_other);
-      fd.append("location_type", form.location_type.join(","));
-      fd.append("region_note", form.region_note); fd.append("gpa_note", form.gpa_note);
-      fd.append("additional_other", form.additional_other);
-      fd.append("facebook", form.facebook); fd.append("twitter", form.twitter);
-      fd.append("instagram", form.instagram); fd.append("website", form.website);
-      fd.append("youtube", form.youtube); fd.append("discord", form.discord);
-      fd.append("tiktok", form.tiktok); fd.append("application_link", form.application_link);
-      if (posterFile) fd.append("poster", posterFile);
+      fd.append("max_participants", form.capacity);
+      fd.append("price", form.entry_fee);
+      fd.append("price_type", form.fee_type.join(","));
+
+      const eligibilityParts = [
+        ...form.participant_level,
+        ...form.age_range,
+        ...form.academic_track,
+        ...form.location_type,
+        form.academic_other   ? `academic_other:${form.academic_other}` : "",
+        form.gpa_note         ? `gpa:${form.gpa_note}` : "",
+        form.additional_other ? `additional:${form.additional_other}` : "",
+        form.region_note      ? `region:${form.region_note}` : "",
+        form.event_date_note  ? `time:${form.event_date_note}` : "",
+      ].filter(Boolean);
+      fd.append("eligibility", eligibilityParts.join(","));
+
+      if (posterFile)   fd.append("poster", posterFile);
       if (headlineFile) fd.append("headline", headlineFile);
+
+      // ── social_links table ───────────────────────────────────────────────────
+      fd.append("facebook",  form.facebook);
+      fd.append("twitter",   form.twitter);
+      fd.append("instagram", form.instagram);
+      fd.append("website",   form.website);
+      fd.append("youtube",   form.youtube);
+      fd.append("discord",   form.discord);
+      fd.append("tiktok",    form.tiktok);
+
       const token = document.cookie.split("; ").find((r) => r.startsWith("token="))?.split("=")[1] ?? null;
       const res = await fetch(`${API_URL}/api/camps`, {
-        method: "POST", headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) }, body: fd,
+        method: "POST",
+        headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        body: fd,
       });
-      const data = await res.json();
-      if (res.ok) {
-        setSubmitResult({ ok: true, message: `✅ ส่งข้อมูลสำเร็จ! Camp ID: ${data.camp_id}` });
-        setForm(INITIAL_STATE); setPosterFile(null); setHeadlineFile(null);
-      } else {
-        setSubmitResult({ ok: false, message: `❌ เกิดข้อผิดพลาด: ${data.message}` });
+
+      // ── debug: log raw response ──────────────────────────────────────────────
+      const rawText = await res.text();
+      console.log("📡 HTTP status:", res.status);
+      console.log("📡 Raw response:", rawText);
+
+      let data: any = {};
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        // response ไม่ใช่ JSON
+        setSubmitResult({ ok: false, message: `❌ Server ตอบกลับผิดรูปแบบ (status ${res.status}): ${rawText.slice(0, 200)}` });
+        return;
       }
-    } catch {
-      setSubmitResult({ ok: false, message: "❌ ไม่สามารถเชื่อมต่อ server ได้" });
+
+      console.log("📡 Parsed data:", data);
+
+      if (res.ok) {
+        setSubmitResult({ ok: true, message: `✅ ส่งข้อมูลสำเร็จ! รอแอดมินตรวจสอบ` });
+        setForm(INITIAL_STATE); setPosterFile(null); setHeadlineFile(null); setDeadlineError("");
+      } else {
+        const errMsg = data?.message ?? data?.error ?? JSON.stringify(data);
+        console.error("❌ Backend error:", errMsg);
+        setSubmitResult({ ok: false, message: `❌ เกิดข้อผิดพลาด` });
+      }
+    } catch (err: any) {
+      console.error("❌ Fetch error:", err);
+      setSubmitResult({ ok: false, message: `❌ ไม่สามารถเชื่อมต่อ server ได้` });
     } finally { setSubmitting(false); }
   };
 
@@ -182,7 +231,6 @@ export default function Box_file() {
           </p>
 
           <div className="flex gap-12 mt-10">
-            {/* Sidebar */}
             <div className="hidden lg:block w-[320px] flex-shrink-0">
               <div className="sticky top-[120px] space-y-4">
                 <SidebarItem active={activeSection === "organizer"} icon="/Icon finger.png" text="Organizer Info"
@@ -197,7 +245,7 @@ export default function Box_file() {
             </div>
 
             <div className="flex-1">
-              {/* Section 1 */}
+              {/* Section 1 — Organizer Info */}
               <div ref={sectionRefs.organizer} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-xl md:text-2xl font-bold text-[#1B2044]">ข้อมูลผู้ประสานงานกิจกรรม <span className="font-bold ml-2">(Organizer Info)</span></h2>
                 <p className="text-gray-500 mt-2 mb-6">กรุณากรอกข้อมูลของผู้ประสานงานกิจกรรม</p>
@@ -215,9 +263,9 @@ export default function Box_file() {
                 </div>
               </div>
 
-              {/* Section 2 */}
+              {/* Section 2 — Social Media Content */}
               <div ref={sectionRefs.social} className="w-full max-w-[820px] mb-16">
-                <h2 className="text-xl sm:text-2xl font-bold text-[#1B2044]">ข้อความพาดหัวและรูปภาพสำหรับประชาสัมพันธ์ <span className="font-medium ml-2">(Social Media Content)</span></h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-[#1B2144]">ข้อความพาดหัวและรูปภาพสำหรับประชาสัมพันธ์ <span className="font-medium ml-2">(Social Media Content)</span></h2>
                 <p className="text-gray-400 mt-2 mb-6 text-sm">ส่วนนี้ใช้สำหรับกรอกข้อความพาดหัวและแนบรูปภาพประกอบกิจกรรม</p>
                 <div className="w-full bg-gray-100 border border-gray-300 p-8 rounded-2xl">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
@@ -249,19 +297,34 @@ export default function Box_file() {
                 </div>
               </div>
 
-              {/* Section 3 */}
+              {/* Section 3 — Activity Overview */}
               <div ref={sectionRefs.overview} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-xl sm:text-2xl font-bold text-[#1B2044]">รายละเอียดกิจกรรมทั้งหมด <span className="font-medium ml-2">(Full Activity Details)</span></h2>
-                <p className="text-gray-400 mt-2 mb-6 text-sm">ส่วนนี้ใช้สำหรับกรอกข้อมูลรายละเอียดกิจกรรม สถานที่จัด การสมัคร และข้อมูลผู้จัดงาน</p>
+                <p className="text-gray-400 mt-2 mb-6 text-sm">ส่วนนี้ใช้สำหรับกรอกข้อมูลรายละเอียดกิจกรรม</p>
                 <div className="bg-[#F4F4F4] border border-gray-300 p-4 sm:p-6 md:p-8 rounded-2xl space-y-8">
                   <div>
                     <p className="text-[#1B2044] font-semibold mb-3 text-sm">Event Date <span className="font-normal">(วันที่จัดกิจกรรม)</span></p>
-                    <MyDatePicker selected={form.event_date} onChange={(date: Date | null) => setForm((prev) => ({ ...prev, event_date: date }))} />
+                    <MyDatePicker selected={form.event_date} onChange={(date: Date | null) => {
+                      setForm((prev) => ({ ...prev, event_date: date }));
+                      if (form.registration_deadline && date && form.registration_deadline >= date) {
+                        setDeadlineError("❌ วันปิดรับสมัครต้องก่อนวันจัดกิจกรรม");
+                      } else {
+                        setDeadlineError("");
+                      }
+                    }} />
                   </div>
                   <div>
                     <p className="text-[#1B2044] font-semibold mb-1 text-sm">Registration Deadline <span className="font-normal">(วันปิดรับสมัคร)</span></p>
                     <p className="text-gray-400 text-xs mb-3">กรุณาระบุวันสุดท้ายที่เปิดรับสมัคร</p>
-                    <MyDatePicker selected={form.registration_deadline} onChange={(date: Date | null) => setForm((prev) => ({ ...prev, registration_deadline: date }))} />
+                    <MyDatePicker selected={form.registration_deadline} onChange={(date: Date | null) => {
+                      if (date && form.event_date && date >= form.event_date) {
+                        setDeadlineError("❌ วันปิดรับสมัครต้องก่อนวันจัดกิจกรรม");
+                      } else {
+                        setDeadlineError("");
+                      }
+                      setForm((prev) => ({ ...prev, registration_deadline: date }));
+                    }} />
+                    {deadlineError && <p className="text-red-500 text-xs mt-2 font-medium">{deadlineError}</p>}
                   </div>
                   <div>
                     <p className="text-[#1B2044] font-semibold mb-4 text-sm">Event Format (รูปแบบกิจกรรม)</p>
@@ -314,27 +377,47 @@ export default function Box_file() {
                     </div>
                   </div>
                   <div>
+                    <p className="text-[#606060] text-sm mb-3">เกรดเฉลี่ยขั้นต่ำ (GPA)</p>
+                    <input value={form.gpa_note} onChange={(e) => set("gpa_note")(e.target.value)}
+                      placeholder="เช่น เกรดเฉลี่ย 2.50 ขึ้นไป หรือ ไม่กำหนด"
+                      className="w-full h-[36px] px-3 border border-gray-300 bg-white rounded-lg text-sm placeholder:text-xs placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-[#1B2144]" />
+                  </div>
+                  <div>
                     <p className="text-[#606060] text-sm mb-3">Academic Track - สายการเรียน</p>
                     <div className="space-y-3">
                       {[{label:"สายวิทย์-คณิต",val:"science"},{label:"สายศิลป์-ภาษา",val:"arts"},{label:"ทุกสายการเรียน",val:"any"}].map(({label,val}) => (
                         <Checkbox key={val} label={label} checked={form.academic_track.includes(val)} onChange={() => toggle("academic_track", val)} />
                       ))}
+                      <div className="flex items-center gap-3">
+                        <Checkbox label="อื่นๆ" checked={form.academic_track.includes("other")} onChange={() => toggle("academic_track", "other")} />
+                        {form.academic_track.includes("other") && (
+                          <input value={form.academic_other} onChange={(e) => set("academic_other")(e.target.value)}
+                            placeholder="ระบุสายการเรียนอื่นๆ"
+                            className="h-[29px] px-3 border border-gray-300 bg-white rounded-lg text-sm placeholder:text-xs placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-[#1B2144]" />
+                        )}
+                      </div>
                     </div>
                   </div>
-
-                  {/* Event Location — MapPicker */}
+                  <div>
+                    <p className="text-[#606060] text-sm mb-3">คุณสมบัติเพิ่มเติมอื่นๆ</p>
+                    <input value={form.additional_other} onChange={(e) => set("additional_other")(e.target.value)}
+                      placeholder="เช่น ต้องมีพอร์ตโฟลิโอ, ต้องผ่านการอบรมเบื้องต้น"
+                      className="w-full h-[36px] px-3 border border-gray-300 bg-white rounded-lg text-sm placeholder:text-xs placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-[#1B2144]" />
+                  </div>
                   <div>
                     <p className="text-[#1B2044] font-semibold mb-4 text-sm">Event Location (สถานที่จัดกิจกรรม)</p>
                     <div className="space-y-3 mb-4">
                       <Checkbox label="กิจกรรมนอกสถานที่ (On-site Event)" checked={form.location_type.includes("onsite")} onChange={() => toggle("location_type", "onsite")} />
                       <Checkbox label="กิจกรรมออนไลน์ (Online Event)" checked={form.location_type.includes("online")} onChange={() => toggle("location_type", "online")} />
                     </div>
-                    <MapPicker
-                      value={form.location}
-                      onChange={(loc) => set("location")(loc)}
-                    />
+                    <MapPicker value={form.location} onChange={(loc) => set("location")(loc)} />
+                    <div className="mt-4">
+                      <p className="text-[#1B2044] font-semibold mb-2 text-sm">หมายเหตุภูมิภาค / จังหวัด</p>
+                      <input value={form.region_note} onChange={(e) => set("region_note")(e.target.value)}
+                        placeholder="เช่น จัดเฉพาะในกรุงเทพฯ และปริมณฑล"
+                        className="w-full h-[36px] px-3 border border-gray-300 bg-white rounded-lg text-sm placeholder:text-xs placeholder:text-gray-400 outline-none focus:ring-1 focus:ring-[#1B2144]" />
+                    </div>
                   </div>
-
                   <div>
                     <p className="text-[#1B2044] font-semibold mb-2 text-sm">Organizer Information (ข้อมูลผู้จัดกิจกรรม)</p>
                     <input value={form.organizer_name} onChange={(e) => set("organizer_name")(e.target.value)} placeholder="ชื่อคณะ / สถาบัน / บริษัท / กลุ่ม"
@@ -360,7 +443,7 @@ export default function Box_file() {
                 </div>
               </div>
 
-              {/* Section 4 */}
+              {/* Section 4 — Full Activity Details */}
               <div ref={sectionRefs.details} className="w-full max-w-[820px] mb-16">
                 <h2 className="text-[28px] font-bold text-[#1B2144]">ข้อมูลกิจกรรมโดยละเอียด <span className="font-medium ml-2">(Full Activity Details)</span></h2>
                 <p className="text-gray-500 text-sm mt-3 leading-relaxed">กรอกข้อมูลกิจกรรมโดยละเอียด เพื่อให้ผู้สมัครเข้าใจภาพรวมทั้งหมดของกิจกรรม</p>
@@ -385,7 +468,7 @@ export default function Box_file() {
                     {submitResult.message}
                   </div>
                 )}
-                <button onClick={handleSubmit} disabled={submitting}
+                <button onClick={handleSubmit} disabled={submitting || !!deadlineError}
                   className="w-full h-[52px] bg-[#1B2144] text-white font-semibold rounded-2xl hover:bg-[#111830] transition-colors disabled:opacity-60 text-sm">
                   {submitting ? "⏳ กำลังส่งข้อมูล..." : "ส่งข้อมูลกิจกรรม →"}
                 </button>

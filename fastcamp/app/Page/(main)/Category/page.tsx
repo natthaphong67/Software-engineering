@@ -83,75 +83,107 @@ const Category = () => {
   const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
+  const activeLabel = CATEGORIES.find((c) => c.value === active)?.label ?? "";
+
   return (
     <div>
-      {/* Hero */}
-      <div className="relative mt-5 mx-auto max-w-[97%] aspect-[1866/918] overflow-hidden rounded-4xl bg-gradient-to-r from-[#280C3C] via-[#000523] to-[#003376]">
-        <div className="absolute top-16 md:top-28 lg:top-32 left-1/2 -translate-x-1/2 text-center z-20 px-4">
-          <h1 className="font-black bg-gradient-to-r from-white via-neutral-400 to-gray-600 bg-clip-text text-transparent text-4xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-none">
+      {/* ===== HERO ===== */}
+      <div className="relative mt-2 sm:mt-5 mx-auto max-w-[97%] overflow-hidden rounded-2xl sm:rounded-4xl bg-gradient-to-r from-[#280C3C] via-[#000523] to-[#003376]
+        aspect-[3/2] sm:aspect-[2/1] md:aspect-[1866/918]">
+        <div className="absolute top-8 sm:top-16 md:top-28 lg:top-32 left-1/2 -translate-x-1/2 text-center z-20 px-4 w-full">
+          <h1 className="font-black bg-gradient-to-r from-white via-neutral-400 to-gray-600 bg-clip-text text-transparent
+            text-5xl sm:text-6xl md:text-8xl lg:text-[10rem] leading-none">
             CATEGORY
           </h1>
-          <h2 className="mt-2 font-black bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent text-sm sm:text-base md:text-2xl lg:text-3xl">
+          <h2 className="mt-1 sm:mt-2 font-black bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent
+            text-xs sm:text-base md:text-2xl lg:text-3xl">
             ค่ายที่ใช่สำหรับความสนใจของคุณ
           </h2>
         </div>
-        <div>
-          <Image src="/2.png" alt="Hero" width={1883} height={733} priority className="absolute bottom-0 left-1/2 -translate-x-1/2 max-w-none z-10"/>
-        </div>
+        <Image
+          src="/2.png" alt="Hero" width={1883} height={733} priority
+          className="absolute bottom-0 left-1/2 -translate-x-1/2 max-w-none z-10
+            w-[160%] sm:w-[140%] md:w-full"/>
       </div>
 
-      {/* Content Section */}
-      <div className="min-h-screen bg-white flex items-center justify-center px-6 py-10">
-        <div className="mt-10 mx-auto flex flex-col gap-6 rounded-4xl border p-4 md:p-8 w-full max-w-7xl">
+      {/* ===== CONTENT ===== */}
+      <div className="min-h-screen bg-white px-3 sm:px-6 py-6 sm:py-10">
+        <div className="mt-4 sm:mt-10 mx-auto flex flex-col gap-4 sm:gap-6 rounded-2xl sm:rounded-4xl border p-3 sm:p-6 md:p-8 w-full max-w-7xl">
+
+          {/* --- Mobile: horizontal scroll category chips --- */}
+          <div className="flex md:hidden flex-col gap-3">
+            <h1 className="text-xl font-semibold">Category</h1>
+
+            {/* Chip scroll row */}
+            <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide
+              [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.value}
+                  onClick={() => setActive(cat.value)}
+                  className={`flex-shrink-0 h-9 px-4 rounded-full border text-xs font-medium transition-colors whitespace-nowrap
+                    ${active === cat.value
+                      ? "bg-[#1B2044] text-white border-[#1B2044]"
+                      : "bg-white text-gray-600 hover:bg-gray-50"}`}>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Active label */}
+            <p className="text-sm text-gray-500">
+              แสดงผล: <span className="font-semibold text-gray-800">{activeLabel}</span>
+              {!loading && <span className="ml-1 text-gray-400">({filtered.length} รายการ)</span>}
+            </p>
+          </div>
+
+          {/* --- Desktop: sidebar + grid --- */}
           <div className="flex flex-col md:flex-row items-start gap-6 md:gap-12">
 
-            {/* ซ้าย — Category filter */}
-            <div className="w-full md:w-auto shrink-0">
-              <h1 className="mb-4 text-xl md:text-3xl font-semibold">Category</h1>
-              <div className="flex flex-col gap-3 md:gap-5">
+            {/* Sidebar — desktop only */}
+            <div className="hidden md:block w-auto shrink-0">
+              <h1 className="mb-4 text-3xl font-semibold">Category</h1>
+              <div className="flex flex-col gap-5">
                 {CATEGORIES.map((cat) => (
                   <button
                     key={cat.value}
                     onClick={() => setActive(cat.value)}
-                    className={`h-11 md:h-12 w-full md:w-[360px] rounded-2xl border text-sm md:text-base transition-colors ${
-                      active === cat.value ? "bg-[#1B2044] text-white" : "hover:bg-gray-50"
-                    }`}
-                  >
+                    className={`h-12 w-[360px] rounded-2xl border text-base transition-colors
+                      ${active === cat.value ? "bg-[#1B2044] text-white" : "hover:bg-gray-50"}`}>
                     {cat.label}
                   </button>
                 ))}
               </div>
             </div>
 
-            {/* ขวา — รูปภาพ + pagination */}
+            {/* Camp grid + pagination */}
             <div className="w-full flex flex-col gap-4">
               {loading ? (
-                <div className="text-gray-400 text-sm">กำลังโหลด...</div>
+                <div className="text-gray-400 text-sm py-8 text-center">กำลังโหลด...</div>
               ) : paginated.length === 0 ? (
-                <div className="text-gray-400 text-sm">ไม่มีกิจกรรมในหมวดนี้</div>
+                <div className="text-gray-400 text-sm py-8 text-center">ไม่มีกิจกรรมในหมวดนี้</div>
               ) : (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+                /* Mobile: 1 col, SM: 2 cols */
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
                   {paginated.map((camp) => {
                     const badge = camp.camp_status === "closed"
                       ? { text: "ปิดรับสมัครแล้ว", color: "bg-gray-400 text-white" }
                       : getDeadlineBadge(camp.registration_deadline || camp.event_date);
                     return (
                       <Link key={camp.id} href={`/Page/Infomation/${camp.id}`}>
-                        <div className="relative w-full h-[220px] md:h-[300px] overflow-hidden rounded-xl group cursor-pointer">
+                        <div className="relative w-full h-[180px] sm:h-[220px] md:h-[300px] overflow-hidden rounded-xl group cursor-pointer">
                           <Image
                             src={campImage(camp.headline_image_url ?? camp.poster_url, "/Group 1000005981.png")}
-                            alt={camp.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                          />
+                            alt={camp.title} fill
+                            className="object-cover group-hover:scale-105 transition-transform duration-300"/>
                           {badge && (
-                            <div className={`absolute top-3 right-3 z-10 px-3 py-1 rounded-full text-xs font-semibold ${badge.color}`}>
+                            <div className={`absolute top-2 right-2 sm:top-3 sm:right-3 z-10 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-semibold ${badge.color}`}>
                               {badge.text}
                             </div>
                           )}
-                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                            <p className="text-white font-semibold text-sm">{camp.title}</p>
-                            <p className="text-white/60 text-xs mt-0.5 line-clamp-1">{camp.tagline}</p>
+                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4">
+                            <p className="text-white font-semibold text-xs sm:text-sm">{camp.title}</p>
+                            <p className="text-white/60 text-[10px] sm:text-xs mt-0.5 line-clamp-1">{camp.tagline}</p>
                           </div>
                         </div>
                       </Link>
@@ -162,12 +194,11 @@ const Category = () => {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className="flex justify-end gap-2 pt-2">
+                <div className="flex justify-center sm:justify-end items-center gap-2 pt-2">
                   <button
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
                     disabled={page === 1}
-                    className="h-9 w-9 rounded-xl border disabled:opacity-40"
-                  >
+                    className="h-9 w-9 rounded-xl border disabled:opacity-40 text-lg">
                     ‹
                   </button>
                   <span className="h-9 px-3 flex items-center text-sm text-gray-500">
@@ -176,8 +207,7 @@ const Category = () => {
                   <button
                     onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
                     disabled={page === totalPages}
-                    className="h-9 w-9 rounded-xl border disabled:opacity-40"
-                  >
+                    className="h-9 w-9 rounded-xl border disabled:opacity-40 text-lg">
                     ›
                   </button>
                 </div>
@@ -187,19 +217,22 @@ const Category = () => {
         </div>
       </div>
 
-      {/* ส่งกิจกรรมขึ้นเว็บ */}
-      <div className="w-full bg-white py-6 md:py-10">
-        <div className="mx-auto w-full max-w-7xl rounded-3xl bg-gradient-to-r from-[#220163] to-[#074C89] p-3">
-          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 rounded-2xl border border-white/40 px-5 py-6 md:px-10 md:py-8">
+      {/* ===== BANNER ส่งกิจกรรม ===== */}
+      <div className="w-full bg-white py-5 sm:py-6 md:py-10 px-3 sm:px-6">
+        <div className="mx-auto w-full max-w-7xl rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#220163] to-[#074C89] p-2 sm:p-3">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6
+            rounded-xl sm:rounded-2xl border border-white/40 px-4 py-5 sm:px-8 sm:py-6 md:px-10 md:py-8">
             <div className="max-w-2xl">
-              <h2 className="text-lg sm:text-xl md:text-3xl font-bold text-white">
+              <h2 className="text-base sm:text-xl md:text-3xl font-bold text-white leading-snug">
                 เพราะค่ายที่ดีที่สุด คือค่ายที่ถูกค้นพบในเวลาที่ใช่ที่สุด
               </h2>
-              <p className="mt-2 text-sm md:text-base text-white/80">
+              <p className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base text-white/80">
                 ส่งข้อมูลค่ายของคุณเข้ามา แล้วให้เราเป็นสื่อกลางในการเผยแพร่สู่ผู้เข้าร่วมที่ใช่
               </p>
             </div>
-            <button onClick={() => window.location.href = "/Page/LandingPage"} className="w-full md:w-auto shrink-0 rounded-full border border-white/70 px-6 py-3 md:px-8 md:py-3 text-sm md:text-base text-white hover:bg-white hover:text-[#5B3F8C] transition">
+            <button
+              onClick={() => window.location.href = "/Page/LandingPage"}
+              className="w-full sm:w-auto shrink-0 rounded-full border border-white/70 px-6 py-2.5 sm:py-3 text-sm md:text-base text-white hover:bg-white hover:text-[#5B3F8C] transition">
               ส่งกิจกรรมขึ้นเว็บ
             </button>
           </div>

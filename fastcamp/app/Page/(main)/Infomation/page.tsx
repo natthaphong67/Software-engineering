@@ -60,6 +60,12 @@ export default function InformationPage() {
   const [reviewComment, setReviewComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [reviewPage, setReviewPage] = useState(0);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = document.cookie.split("; ").find((r) => r.startsWith("token="))?.split("=")[1];
+    setIsLoggedIn(!!token);
+  }, []);
 
   useEffect(() => {
     if (!id) return;
@@ -186,10 +192,21 @@ export default function InformationPage() {
             {/* MAP */}
             {camp.location && (
               <div className="w-full h-[250px] sm:h-[300px] md:h-[350px] rounded-3xl overflow-hidden shadow-lg">
-                <iframe
-                  src={`https://maps.google.com/maps?q=${encodeURIComponent(camp.location)}&output=embed`}
-                  className="w-full h-full border-0" loading="lazy"
-                />
+                {camp.location.match(/^-?\d+\.\d+,-?\d+\.\d+$/) ? (
+                  // lat,lng format — ใช้ OpenStreetMap embed
+                  <iframe
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${
+                      (() => { const [la,ln] = camp.location.split(",").map(Number); return `${ln-0.01},${la-0.01},${ln+0.01},${la+0.01}`; })()
+                    }&layer=mapnik&marker=${camp.location.replace(",", "%2C")}`}
+                    className="w-full h-full border-0" loading="lazy"
+                  />
+                ) : (
+                  // text format — ใช้ Google Maps
+                  <iframe
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(camp.location)}&output=embed`}
+                    className="w-full h-full border-0" loading="lazy"
+                  />
+                )}
               </div>
             )}
             {/* CONTACT */}
@@ -224,10 +241,17 @@ export default function InformationPage() {
         </div>
         <div className="w-full max-w-[520px] relative">
           <div className="flex justify-end mb-6">
-            <button onClick={() => setShowPopup(true)}
-              className="border border-white/30 text-white text-sm px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
-              Share your
-            </button>
+            {isLoggedIn ? (
+              <button onClick={() => setShowPopup(true)}
+                className="border border-white/30 text-white text-sm px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
+                Share your
+              </button>
+            ) : (
+              <a href="/pageAuth/Login"
+                className="border border-white/30 text-white text-sm px-6 py-2 rounded-full hover:bg-white hover:text-black transition">
+                Login เพื่อรีวิว
+              </a>
+            )}
           </div>
           {reviews.length === 0 ? (
             <p className="text-white/40 text-sm text-center py-10">ยังไม่มีรีวิว — เป็นคนแรกที่รีวิวค่ายนี้!</p>

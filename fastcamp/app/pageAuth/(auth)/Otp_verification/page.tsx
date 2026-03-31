@@ -35,7 +35,7 @@ function OtpForm() {
     if (otpCode.length < 6) { alert("กรอก OTP ให้ครบ"); return; }
 
     try {
-      await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/verify-otp`, {
+      await axios.post(`http://localhost:3001/auth/verify-otp`, {
         email,
         otp: otpCode,
       });

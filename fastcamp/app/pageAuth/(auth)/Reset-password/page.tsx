@@ -2,7 +2,7 @@
 import Link from "next/link"
 import { useState, useRef } from "react"
 
-const API = process.env.NEXT_PUBLIC_API_URL
+const API = "http://localhost:3001"
 
 // ─── Left Panel ───────────────────────────────────────────────────────────────
 const LeftPanel = () => (

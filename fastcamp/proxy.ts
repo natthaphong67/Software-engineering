@@ -15,12 +15,7 @@ export function proxy(request: NextRequest) {
   const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
-  const isProtected = pathname.startsWith("/Page");
   const isAdmin = pathname.startsWith("/Admin");
-
-  if (isProtected && !token) {
-    return NextResponse.redirect(new URL("/pageAuth/Login", request.url));
-  }
 
   if (isAdmin) {
     if (!token) {
@@ -36,5 +31,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/Page/:path*", "/Admin/:path*"],
+  matcher: ["/Admin/:path*"],
 };

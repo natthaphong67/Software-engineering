@@ -11,17 +11,6 @@
   background-size: cover;
 }
 
-input[type="date"]::-webkit-datetime-edit {
-
-color: transparent;
-
-}
-
-input[type="date"]:focus::-webkit-datetime-edit {
-
-color: black;
-
-}
 
 * {
   font-family: var(--font-thai), sans-serif;

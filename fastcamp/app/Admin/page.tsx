@@ -52,9 +52,7 @@ function parseJwt(token: string) {
   try {
     const base64 = token.split(".")[1];
     return JSON.parse(atob(base64));
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
 function formatDate(d: string) {
@@ -81,6 +79,7 @@ export default function AdminDashboard() {
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
   const [tab, setTab] = useState<Tab>("camps");
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [camps, setCamps] = useState<Camp[]>([]);
   const [campsLoading, setCampsLoading] = useState(true);
@@ -91,6 +90,7 @@ export default function AdminDashboard() {
 
   const [users, setUsers] = useState<User[]>([]);
   const [usersLoading, setUsersLoading] = useState(false);
+  const [userStatusLoading, setUserStatusLoading] = useState<number | null>(null);
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [reviewsLoading, setReviewsLoading] = useState(false);
@@ -98,7 +98,6 @@ export default function AdminDashboard() {
   const getToken = () =>
     document.cookie.split("; ").find((r) => r.startsWith("token="))?.split("=")[1] ?? "";
 
-  // 🔒 เช็ค role ก่อน render
   useEffect(() => {
     const token = document.cookie.split("; ").find((r) => r.startsWith("token="))?.split("=")[1];
     if (!token) return void router.replace("/pageAuth/Login");
@@ -110,24 +109,17 @@ export default function AdminDashboard() {
   const fetchCamps = async () => {
     setCampsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/admin/camps`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const res = await fetch(`${API_URL}/api/admin/camps`, { headers: { Authorization: `Bearer ${getToken()}` } });
       const data = await res.json();
       setCamps(Array.isArray(data) ? data : []);
-    } catch {
-      setMessage({ ok: false, text: "ไม่สามารถโหลดข้อมูลได้" });
-    } finally {
-      setCampsLoading(false);
-    }
+    } catch { setMessage({ ok: false, text: "ไม่สามารถโหลดข้อมูลได้" }); }
+    finally { setCampsLoading(false); }
   };
 
   const fetchUsers = async () => {
     setUsersLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/admin/users`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const res = await fetch(`${API_URL}/api/admin/users`, { headers: { Authorization: `Bearer ${getToken()}` } });
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
     } catch {} finally { setUsersLoading(false); }
@@ -136,9 +128,7 @@ export default function AdminDashboard() {
   const fetchReviews = async () => {
     setReviewsLoading(true);
     try {
-      const res = await fetch(`${API_URL}/api/reviews`, {
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      const res = await fetch(`${API_URL}/api/reviews`, { headers: { Authorization: `Bearer ${getToken()}` } });
       const data = await res.json();
       setReviews(Array.isArray(data) ? data : []);
     } catch {} finally { setReviewsLoading(false); }
@@ -168,13 +158,24 @@ export default function AdminDashboard() {
     finally { setActionLoading(null); }
   };
 
+  const toggleUserStatus = async (id: number, currentStatus: string) => {
+    const newStatus = currentStatus === "active" ? "pending" : "active";
+    setUserStatusLoading(id);
+    try {
+      const res = await fetch(`${API_URL}/api/admin/users/${id}/status`, {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${getToken()}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) setUsers((prev) => prev.map((u) => u.id === id ? { ...u, status: newStatus } : u));
+    } catch {}
+    finally { setUserStatusLoading(null); }
+  };
+
   const deleteCamp = async (id: number) => {
     if (!confirm("ต้องการลบค่ายนี้?")) return;
     try {
-      await fetch(`${API_URL}/api/admin/camps/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      await fetch(`${API_URL}/api/admin/camps/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${getToken()}` } });
       setCamps((prev) => prev.filter((c) => c.id !== id));
       if (selectedCamp?.id === id) setSelectedCamp(null);
     } catch {}
@@ -183,10 +184,7 @@ export default function AdminDashboard() {
   const deleteUser = async (id: number) => {
     if (!confirm("ต้องการลบผู้ใช้นี้?")) return;
     try {
-      await fetch(`${API_URL}/api/admin/users/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      await fetch(`${API_URL}/api/admin/users/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${getToken()}` } });
       setUsers((prev) => prev.filter((u) => u.id !== id));
     } catch {}
   };
@@ -194,12 +192,14 @@ export default function AdminDashboard() {
   const deleteReview = async (id: number) => {
     if (!confirm("ต้องการลบรีวิวนี้?")) return;
     try {
-      await fetch(`${API_URL}/api/admin/reviews/${id}`, {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${getToken()}` },
-      });
+      await fetch(`${API_URL}/api/admin/reviews/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${getToken()}` } });
       setReviews((prev) => prev.filter((r) => r.id !== id));
     } catch {}
+  };
+
+  const handleTabChange = (key: Tab) => {
+    setTab(key);
+    setSidebarOpen(false);
   };
 
   const filtered = filter === "all" ? camps : camps.filter((c) => c.status === filter);
@@ -210,15 +210,36 @@ export default function AdminDashboard() {
     rejected: camps.filter((c) => c.status === "rejected").length,
   };
 
-  // 🔒 ยังไม่ผ่านการเช็ค ไม่ render อะไรเลย
   if (!authorized) return null;
 
   return (
     <div className="min-h-screen bg-gray-50 text-[#1B2144]">
 
+      {/* Mobile top bar */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 h-14 bg-white border-b border-gray-100 flex items-center justify-between px-4 z-20">
+        <div className="flex items-center gap-3">
+          <button onClick={() => setSidebarOpen(!sidebarOpen)} className="w-8 h-8 flex flex-col justify-center gap-1.5">
+            <span className={`block h-0.5 bg-[#1B2144] transition-all ${sidebarOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`block h-0.5 bg-[#1B2144] transition-all ${sidebarOpen ? "opacity-0" : ""}`} />
+            <span className={`block h-0.5 bg-[#1B2144] transition-all ${sidebarOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
+          <span className="font-bold text-[#1B2144]">FastCamp</span>
+          <span className="text-xs text-gray-400">Admin</span>
+        </div>
+        <span className="text-xs font-medium text-gray-500">
+          {{ camps: "ค่ายกิจกรรม", users: "ผู้ใช้งาน", reviews: "รีวิวเว็บ" }[tab]}
+        </span>
+      </div>
+
+      {/* Sidebar overlay (mobile) */}
+      {sidebarOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/40 z-10" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-[220px] bg-white border-r border-gray-100 flex flex-col p-6 z-10">
-        <div className="text-lg font-bold text-[#1B2144] mb-1">FastCamp</div>
+      <div className={`fixed left-0 top-0 h-full w-[220px] bg-white border-r border-gray-100 flex flex-col p-6 z-20 transition-transform duration-200
+        lg:translate-x-0 ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="text-lg font-bold text-[#1B2144] mb-1 mt-0 lg:mt-0">FastCamp</div>
         <div className="text-xs text-gray-400 mb-8">Admin Panel</div>
         <nav className="space-y-1">
           {([
@@ -226,7 +247,7 @@ export default function AdminDashboard() {
             { key: "users",   label: "ผู้ใช้งาน" },
             { key: "reviews", label: "รีวิวเว็บ" },
           ] as const).map((item) => (
-            <div key={item.key} onClick={() => setTab(item.key)}
+            <div key={item.key} onClick={() => handleTabChange(item.key)}
               className={`px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors ${
                 tab === item.key ? "bg-[#1B2144] text-white font-medium" : "text-gray-400 hover:text-[#1B2144] hover:bg-gray-50"
               }`}>
@@ -236,21 +257,24 @@ export default function AdminDashboard() {
         </nav>
       </div>
 
-      {/* Main */}
-      <div className="ml-[220px] p-8">
+      {/* Main content */}
+      <div className="lg:ml-[220px] pt-14 lg:pt-0 p-4 lg:p-8">
 
         {/* CAMPS TAB */}
         {tab === "camps" && (
           <>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6 lg:mb-8">
               <div>
-                <h1 className="text-xl font-semibold text-[#1B2144]">จัดการค่ายกิจกรรม</h1>
-                <p className="text-sm text-gray-400 mt-0.5">อนุมัติหรือปฏิเสธค่ายที่ส่งเข้ามา</p>
+                <h1 className="text-lg lg:text-xl font-semibold text-[#1B2144]">จัดการค่ายกิจกรรม</h1>
+                <p className="text-xs lg:text-sm text-gray-400 mt-0.5">อนุมัติหรือปฏิเสธค่ายที่ส่งเข้ามา</p>
               </div>
-              <button onClick={fetchCamps} className="px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 hover:bg-gray-100 transition-colors">รีเฟรช</button>
+              <button onClick={fetchCamps} className="px-3 lg:px-4 py-2 rounded-lg border border-gray-200 text-xs lg:text-sm text-gray-500 hover:bg-gray-100 transition-colors">
+                รีเฟรช
+              </button>
             </div>
 
-            <div className="grid grid-cols-4 gap-4 mb-8">
+            {/* Stat cards — 2 cols on mobile, 4 on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8">
               {([
                 { key: "all",      label: "ทั้งหมด",     color: "text-[#1B2144]",   bg: "bg-white"      },
                 { key: "pending",  label: "รอตรวจสอบ",   color: "text-amber-600",   bg: "bg-amber-50"   },
@@ -258,9 +282,9 @@ export default function AdminDashboard() {
                 { key: "rejected", label: "ปฏิเสธแล้ว", color: "text-red-600",     bg: "bg-red-50"     },
               ] as const).map((s) => (
                 <div key={s.key} onClick={() => setFilter(s.key)}
-                  className={`${s.bg} rounded-2xl p-5 cursor-pointer border transition-all ${filter === s.key ? "border-[#1B2144]/30 shadow-sm" : "border-transparent hover:border-gray-200"}`}>
-                  <p className="text-xs text-gray-400 mb-2">{s.label}</p>
-                  <p className={`text-3xl font-bold ${s.color}`}>{counts[s.key]}</p>
+                  className={`${s.bg} rounded-2xl p-4 lg:p-5 cursor-pointer border transition-all ${filter === s.key ? "border-[#1B2144]/30 shadow-sm" : "border-transparent hover:border-gray-200"}`}>
+                  <p className="text-xs text-gray-400 mb-1 lg:mb-2">{s.label}</p>
+                  <p className={`text-2xl lg:text-3xl font-bold ${s.color}`}>{counts[s.key]}</p>
                 </div>
               ))}
             </div>
@@ -271,90 +295,145 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            <div className="flex gap-1 mb-4 bg-gray-100 rounded-xl p-1 w-fit">
+            {/* Filter tabs — scrollable on mobile */}
+            <div className="flex gap-1 mb-4 bg-gray-100 rounded-xl p-1 w-full lg:w-fit overflow-x-auto">
               {(["all", "pending", "approved", "rejected"] as const).map((s) => (
                 <button key={s} onClick={() => setFilter(s)}
-                  className={`px-4 py-1.5 rounded-lg text-sm transition-colors ${filter === s ? "bg-[#1B2144] text-white font-medium" : "text-gray-500 hover:text-gray-700"}`}>
+                  className={`px-3 lg:px-4 py-1.5 rounded-lg text-xs lg:text-sm whitespace-nowrap transition-colors flex-shrink-0 ${filter === s ? "bg-[#1B2144] text-white font-medium" : "text-gray-500 hover:text-gray-700"}`}>
                   {{ all: "ทั้งหมด", pending: "รอตรวจสอบ", approved: "อนุมัติ", rejected: "ปฏิเสธ" }[s]}
-                  <span className="ml-1.5 text-xs opacity-60">({counts[s]})</span>
+                  <span className="ml-1 text-xs opacity-60">({counts[s]})</span>
                 </button>
               ))}
             </div>
 
+            {/* Camps table — card layout on mobile, table on desktop */}
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
               {campsLoading ? (
                 <div className="p-12 text-center text-gray-400 text-sm">กำลังโหลด...</div>
               ) : filtered.length === 0 ? (
                 <div className="p-12 text-center text-gray-400 text-sm">ไม่มีค่ายในหมวดนี้</div>
               ) : (
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ค่าย</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้จัด</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ประเภท</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">วันที่จัด</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สถานะ</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
+                <>
+                  {/* Mobile card list */}
+                  <div className="lg:hidden divide-y divide-gray-50">
                     {filtered.map((camp) => {
                       const s = STATUS_STYLE[camp.status] ?? STATUS_STYLE.pending;
                       return (
-                        <tr key={camp.id} className="hover:bg-gray-50 transition-colors">
-                          <td className="px-5 py-4">
-                            <button onClick={() => setSelectedCamp(camp)} className="text-left">
-                              <p className="font-medium text-[#1B2144] truncate max-w-[200px] hover:underline">{camp.title}</p>
-                              <p className="text-xs text-gray-400 truncate max-w-[200px] mt-0.5">{camp.tagline}</p>
-                            </button>
-                          </td>
-                          <td className="px-5 py-4">
-                            <div className="flex items-center gap-2.5">
-                              <Avatar name={camp.organizer_name} />
-                              <div>
-                                <p className="text-[#1B2144] text-xs font-medium">{camp.organizer_name}</p>
-                                <p className="text-gray-400 text-xs">{camp.contact_email}</p>
-                              </div>
+                        <div key={camp.id} className="p-4">
+                          <div className="flex items-start justify-between gap-2 mb-2">
+                            <div className="flex-1 min-w-0">
+                              <button onClick={() => setSelectedCamp(camp)} className="text-left w-full">
+                                <p className="font-medium text-[#1B2144] text-sm truncate hover:underline">{camp.title}</p>
+                                <p className="text-xs text-gray-400 truncate">{camp.tagline}</p>
+                              </button>
                             </div>
-                          </td>
-                          <td className="px-5 py-4 text-gray-400 text-xs">{camp.type || "—"}</td>
-                          <td className="px-5 py-4 text-gray-500 text-xs">{formatDate(camp.event_date)}</td>
-                          <td className="px-5 py-4">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${s.bg} ${s.text} ${s.border}`}>
-                              <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
-                              {s.label}
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium border flex-shrink-0 ${s.bg} ${s.text} ${s.border}`}>
+                              <span className={`w-1 h-1 rounded-full ${s.dot}`} />{s.label}
                             </span>
-                          </td>
-                          <td className="px-5 py-4">
-                            <div className="flex gap-2 flex-wrap">
-                              <button onClick={() => setSelectedCamp(camp)}
-                                className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
-                                ดูรายละเอียด
-                              </button>
-                              {camp.status !== "approved" && (
-                                <button onClick={() => updateStatus(camp.id, "approve")} disabled={actionLoading === camp.id}
-                                  className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs rounded-lg border border-emerald-200 hover:bg-emerald-100 disabled:opacity-40 transition-colors">
-                                  {actionLoading === camp.id ? "..." : "อนุมัติ"}
-                                </button>
-                              )}
-                              {camp.status !== "rejected" && (
-                                <button onClick={() => updateStatus(camp.id, "reject")} disabled={actionLoading === camp.id}
-                                  className="px-3 py-1.5 bg-red-50 text-red-600 text-xs rounded-lg border border-red-200 hover:bg-red-100 disabled:opacity-40 transition-colors">
-                                  {actionLoading === camp.id ? "..." : "ปฏิเสธ"}
-                                </button>
-                              )}
-                              <button onClick={() => deleteCamp(camp.id)}
-                                className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
-                                ลบ
-                              </button>
+                          </div>
+                          <div className="flex items-center gap-2 mb-3">
+                            <Avatar name={camp.organizer_name} />
+                            <div className="min-w-0">
+                              <p className="text-xs font-medium text-[#1B2144] truncate">{camp.organizer_name}</p>
+                              <p className="text-xs text-gray-400">{formatDate(camp.event_date)}</p>
                             </div>
-                          </td>
-                        </tr>
+                          </div>
+                          <div className="flex gap-2 flex-wrap">
+                            <button onClick={() => setSelectedCamp(camp)}
+                              className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs rounded-lg border border-gray-200 hover:bg-gray-100">
+                              ดูรายละเอียด
+                            </button>
+                            {camp.status !== "approved" && (
+                              <button onClick={() => updateStatus(camp.id, "approve")} disabled={actionLoading === camp.id}
+                                className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs rounded-lg border border-emerald-200 hover:bg-emerald-100 disabled:opacity-40">
+                                {actionLoading === camp.id ? "..." : "อนุมัติ"}
+                              </button>
+                            )}
+                            {camp.status !== "rejected" && (
+                              <button onClick={() => updateStatus(camp.id, "reject")} disabled={actionLoading === camp.id}
+                                className="px-3 py-1.5 bg-red-50 text-red-600 text-xs rounded-lg border border-red-200 hover:bg-red-100 disabled:opacity-40">
+                                {actionLoading === camp.id ? "..." : "ปฏิเสธ"}
+                              </button>
+                            )}
+                            <button onClick={() => deleteCamp(camp.id)}
+                              className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100">
+                              ลบ
+                            </button>
+                          </div>
+                        </div>
                       );
                     })}
-                  </tbody>
-                </table>
+                  </div>
+
+                  {/* Desktop table */}
+                  <table className="hidden lg:table w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-100">
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ค่าย</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้จัด</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ประเภท</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">วันที่จัด</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สถานะ</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {filtered.map((camp) => {
+                        const s = STATUS_STYLE[camp.status] ?? STATUS_STYLE.pending;
+                        return (
+                          <tr key={camp.id} className="hover:bg-gray-50 transition-colors">
+                            <td className="px-5 py-4">
+                              <button onClick={() => setSelectedCamp(camp)} className="text-left">
+                                <p className="font-medium text-[#1B2144] truncate max-w-[200px] hover:underline">{camp.title}</p>
+                                <p className="text-xs text-gray-400 truncate max-w-[200px] mt-0.5">{camp.tagline}</p>
+                              </button>
+                            </td>
+                            <td className="px-5 py-4">
+                              <div className="flex items-center gap-2.5">
+                                <Avatar name={camp.organizer_name} />
+                                <div>
+                                  <p className="text-[#1B2144] text-xs font-medium">{camp.organizer_name}</p>
+                                  <p className="text-gray-400 text-xs">{camp.contact_email}</p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="px-5 py-4 text-gray-400 text-xs">{camp.type || "—"}</td>
+                            <td className="px-5 py-4 text-gray-500 text-xs">{formatDate(camp.event_date)}</td>
+                            <td className="px-5 py-4">
+                              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${s.bg} ${s.text} ${s.border}`}>
+                                <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />{s.label}
+                              </span>
+                            </td>
+                            <td className="px-5 py-4">
+                              <div className="flex gap-2 flex-wrap">
+                                <button onClick={() => setSelectedCamp(camp)}
+                                  className="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
+                                  ดูรายละเอียด
+                                </button>
+                                {camp.status !== "approved" && (
+                                  <button onClick={() => updateStatus(camp.id, "approve")} disabled={actionLoading === camp.id}
+                                    className="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs rounded-lg border border-emerald-200 hover:bg-emerald-100 disabled:opacity-40 transition-colors">
+                                    {actionLoading === camp.id ? "..." : "อนุมัติ"}
+                                  </button>
+                                )}
+                                {camp.status !== "rejected" && (
+                                  <button onClick={() => updateStatus(camp.id, "reject")} disabled={actionLoading === camp.id}
+                                    className="px-3 py-1.5 bg-red-50 text-red-600 text-xs rounded-lg border border-red-200 hover:bg-red-100 disabled:opacity-40 transition-colors">
+                                    {actionLoading === camp.id ? "..." : "ปฏิเสธ"}
+                                  </button>
+                                )}
+                                <button onClick={() => deleteCamp(camp.id)}
+                                  className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
+                                  ลบ
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </>
               )}
             </div>
           </>
@@ -363,12 +442,12 @@ export default function AdminDashboard() {
         {/* USERS TAB */}
         {tab === "users" && (
           <>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6 lg:mb-8">
               <div>
-                <h1 className="text-xl font-semibold text-[#1B2144]">จัดการผู้ใช้งาน</h1>
-                <p className="text-sm text-gray-400 mt-0.5">ดูและจัดการข้อมูลผู้ใช้ทั้งหมด</p>
+                <h1 className="text-lg lg:text-xl font-semibold text-[#1B2144]">จัดการผู้ใช้งาน</h1>
+                <p className="text-xs lg:text-sm text-gray-400 mt-0.5">ดูและจัดการข้อมูลผู้ใช้ทั้งหมด</p>
               </div>
-              <button onClick={fetchUsers} className="px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 hover:bg-gray-100 transition-colors">รีเฟรช</button>
+              <button onClick={fetchUsers} className="px-3 lg:px-4 py-2 rounded-lg border border-gray-200 text-xs lg:text-sm text-gray-500 hover:bg-gray-100 transition-colors">รีเฟรช</button>
             </div>
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
               {usersLoading ? (
@@ -376,45 +455,101 @@ export default function AdminDashboard() {
               ) : users.length === 0 ? (
                 <div className="p-12 text-center text-gray-400 text-sm">ไม่มีข้อมูลผู้ใช้</div>
               ) : (
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้ใช้</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">Role</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สถานะ</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สมัครเมื่อ</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
+                <>
+                  {/* Mobile card list */}
+                  <div className="lg:hidden divide-y divide-gray-50">
                     {users.map((user) => (
-                      <tr key={user.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-5 py-4">
-                          <div className="flex items-center gap-2.5">
-                            <Avatar name={user.full_name} />
-                            <div>
-                              <p className="text-[#1B2144] text-xs font-medium">{user.full_name}</p>
-                              <p className="text-gray-400 text-xs">{user.email}</p>
-                            </div>
+                      <div key={user.id} className="p-4">
+                        <div className="flex items-center gap-2.5 mb-3">
+                          <Avatar name={user.full_name} />
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-[#1B2144] truncate">{user.full_name}</p>
+                            <p className="text-xs text-gray-400 truncate">{user.email}</p>
                           </div>
-                        </td>
-                        <td className="px-5 py-4 text-gray-500 text-xs">{user.role}</td>
-                        <td className="px-5 py-4">
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${user.status === "active" ? "bg-emerald-50 text-emerald-700" : "bg-gray-100 text-gray-500"}`}>
-                            {user.status}
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium flex-shrink-0 ${
+                            user.status === "active" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                          }`}>
+                            {user.status === "active" ? "active" : "pending"}
                           </span>
-                        </td>
-                        <td className="px-5 py-4 text-gray-400 text-xs">{formatDate(user.created_at)}</td>
-                        <td className="px-5 py-4">
-                          <button onClick={() => deleteUser(user.id)}
-                            className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
-                            ลบ
-                          </button>
-                        </td>
-                      </tr>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs text-gray-400">{user.role} · {formatDate(user.created_at)}</span>
+                          <div className="flex gap-2">
+                            <button
+                              onClick={() => toggleUserStatus(user.id, user.status)}
+                              disabled={userStatusLoading === user.id}
+                              className={`px-3 py-1.5 text-xs rounded-lg border transition-colors disabled:opacity-40 ${
+                                user.status === "active"
+                                  ? "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
+                                  : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                              }`}>
+                              {userStatusLoading === user.id ? "..." : user.status === "active" ? "ระงับ" : "เปิดใช้งาน"}
+                            </button>
+                            <button onClick={() => deleteUser(user.id)}
+                              className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100">
+                              ลบ
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+
+                  {/* Desktop table */}
+                  <table className="hidden lg:table w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-100">
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้ใช้</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">Role</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สถานะ</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">สมัครเมื่อ</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {users.map((user) => (
+                        <tr key={user.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-2.5">
+                              <Avatar name={user.full_name} />
+                              <div>
+                                <p className="text-[#1B2144] text-xs font-medium">{user.full_name}</p>
+                                <p className="text-gray-400 text-xs">{user.email}</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 text-gray-500 text-xs">{user.role}</td>
+                          <td className="px-5 py-4">
+                            <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                              user.status === "active" ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700"
+                            }`}>
+                              {user.status === "active" ? "active" : "pending"}
+                            </span>
+                          </td>
+                          <td className="px-5 py-4 text-gray-400 text-xs">{formatDate(user.created_at)}</td>
+                          <td className="px-5 py-4">
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => toggleUserStatus(user.id, user.status)}
+                                disabled={userStatusLoading === user.id}
+                                className={`px-3 py-1.5 text-xs rounded-lg border transition-colors disabled:opacity-40 ${
+                                  user.status === "active"
+                                    ? "bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100"
+                                    : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                                }`}>
+                                {userStatusLoading === user.id ? "..." : user.status === "active" ? "ระงับ" : "เปิดใช้งาน"}
+                              </button>
+                              <button onClick={() => deleteUser(user.id)}
+                                className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
+                                ลบ
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
               )}
             </div>
           </>
@@ -423,12 +558,12 @@ export default function AdminDashboard() {
         {/* REVIEWS TAB */}
         {tab === "reviews" && (
           <>
-            <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center justify-between mb-6 lg:mb-8">
               <div>
-                <h1 className="text-xl font-semibold text-[#1B2144]">จัดการรีวิวเว็บ</h1>
-                <p className="text-sm text-gray-400 mt-0.5">ดูและลบรีวิวจากผู้ใช้งาน</p>
+                <h1 className="text-lg lg:text-xl font-semibold text-[#1B2144]">จัดการรีวิวเว็บ</h1>
+                <p className="text-xs lg:text-sm text-gray-400 mt-0.5">ดูและลบรีวิวจากผู้ใช้งาน</p>
               </div>
-              <button onClick={fetchReviews} className="px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 hover:bg-gray-100 transition-colors">รีเฟรช</button>
+              <button onClick={fetchReviews} className="px-3 lg:px-4 py-2 rounded-lg border border-gray-200 text-xs lg:text-sm text-gray-500 hover:bg-gray-100 transition-colors">รีเฟรช</button>
             </div>
             <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
               {reviewsLoading ? (
@@ -436,36 +571,59 @@ export default function AdminDashboard() {
               ) : reviews.length === 0 ? (
                 <div className="p-12 text-center text-gray-400 text-sm">ไม่มีรีวิว</div>
               ) : (
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้รีวิว</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ความคิดเห็น</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">วันที่</th>
-                      <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-50">
+                <>
+                  {/* Mobile card list */}
+                  <div className="lg:hidden divide-y divide-gray-50">
                     {reviews.map((review) => (
-                      <tr key={review.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-5 py-4">
+                      <div key={review.id} className="p-4">
+                        <div className="flex items-center justify-between gap-3 mb-2">
                           <div className="flex items-center gap-2.5">
                             <Avatar name={review.name || "?"} />
                             <p className="text-xs font-medium text-[#1B2144]">{review.name || "ผู้ใช้งาน"}</p>
                           </div>
-                        </td>
-                        <td className="px-5 py-4 text-gray-600 text-xs max-w-[400px]">{review.comment}</td>
-                        <td className="px-5 py-4 text-gray-400 text-xs">{formatDate(review.created_at)}</td>
-                        <td className="px-5 py-4">
-                          <button onClick={() => deleteReview(review.id)}
-                            className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
-                            ลบ
-                          </button>
-                        </td>
-                      </tr>
+                          <span className="text-xs text-gray-400 flex-shrink-0">{formatDate(review.created_at)}</span>
+                        </div>
+                        <p className="text-xs text-gray-600 mb-3 leading-relaxed">{review.comment}</p>
+                        <button onClick={() => deleteReview(review.id)}
+                          className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100">
+                          ลบ
+                        </button>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
+                  </div>
+
+                  {/* Desktop table */}
+                  <table className="hidden lg:table w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-gray-100">
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ผู้รีวิว</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">ความคิดเห็น</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">วันที่</th>
+                        <th className="text-left px-5 py-3 text-xs text-gray-400 font-medium">จัดการ</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-50">
+                      {reviews.map((review) => (
+                        <tr key={review.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-5 py-4">
+                            <div className="flex items-center gap-2.5">
+                              <Avatar name={review.name || "?"} />
+                              <p className="text-xs font-medium text-[#1B2144]">{review.name || "ผู้ใช้งาน"}</p>
+                            </div>
+                          </td>
+                          <td className="px-5 py-4 text-gray-600 text-xs max-w-[400px]">{review.comment}</td>
+                          <td className="px-5 py-4 text-gray-400 text-xs">{formatDate(review.created_at)}</td>
+                          <td className="px-5 py-4">
+                            <button onClick={() => deleteReview(review.id)}
+                              className="px-3 py-1.5 bg-red-50 text-red-500 text-xs rounded-lg border border-red-200 hover:bg-red-100 transition-colors">
+                              ลบ
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
               )}
             </div>
           </>
@@ -474,12 +632,13 @@ export default function AdminDashboard() {
 
       {/* CAMP DETAIL MODAL */}
       {selectedCamp && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4 overflow-y-auto">
-          <div className="bg-white rounded-2xl w-full max-w-2xl shadow-2xl my-8">
-            <div className="relative h-48 rounded-t-2xl overflow-hidden bg-gray-100">
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center sm:px-4">
+          <div className="bg-white w-full sm:rounded-2xl sm:max-w-2xl shadow-2xl flex flex-col rounded-t-2xl" style={{ maxHeight: "92vh" }}>
+
+            <div className="relative h-40 sm:h-48 rounded-t-2xl overflow-hidden bg-gray-100 flex-shrink-0">
               {campImageUrl(selectedCamp.headline_image_url || selectedCamp.poster_url) ? (
                 <img src={campImageUrl(selectedCamp.headline_image_url || selectedCamp.poster_url)!}
-                  alt={selectedCamp.title} className="w-full h-full object-cover"/>
+                  alt={selectedCamp.title} className="w-full h-full object-cover" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-300 text-4xl">📷</div>
               )}
@@ -487,72 +646,110 @@ export default function AdminDashboard() {
                 className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-gray-600 hover:bg-white transition">✕</button>
             </div>
 
-            <div className="p-6">
-              {(() => { const s = STATUS_STYLE[selectedCamp.status] ?? STATUS_STYLE.pending; return (
-                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border mb-3 ${s.bg} ${s.text} ${s.border}`}>
-                  <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />{s.label}
-                </span>
-              ); })()}
+            <div className="overflow-y-auto flex-1 p-4 sm:p-6">
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                {(() => {
+                  const s = STATUS_STYLE[selectedCamp.status] ?? STATUS_STYLE.pending;
+                  return (
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${s.bg} ${s.text} ${s.border}`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />{s.label}
+                    </span>
+                  );
+                })()}
+                <span className="text-xs text-gray-400">ID: #{selectedCamp.id}</span>
+                <span className="text-xs text-gray-400">ลงทะเบียนเมื่อ {formatDate(selectedCamp.created_at)}</span>
+              </div>
 
-              <h2 className="text-xl font-bold text-[#1B2144] mb-1">{selectedCamp.title}</h2>
-              <p className="text-sm text-gray-500 mb-4">{selectedCamp.tagline}</p>
+              <h2 className="text-lg sm:text-xl font-bold text-[#1B2144] mb-1">{selectedCamp.title}</h2>
+              <p className="text-sm text-gray-500 mb-5">{selectedCamp.tagline}</p>
 
-              <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">ข้อมูลผู้จัด</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm">
                 <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-xs text-gray-400 mb-0.5">ผู้จัด</p>
+                  <p className="text-xs text-gray-400 mb-0.5">ชื่อผู้จัด</p>
                   <p className="font-medium text-[#1B2144]">{selectedCamp.organizer_name}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-xs text-gray-400 mb-0.5">อีเมล</p>
-                  <p className="font-medium text-[#1B2144]">{selectedCamp.contact_email}</p>
+                  <p className="text-xs text-gray-400 mb-0.5">อีเมลติดต่อ</p>
+                  <p className="font-medium text-[#1B2144] break-all">{selectedCamp.contact_email}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-xs text-gray-400 mb-0.5">เบอร์โทร</p>
+                  <p className="text-xs text-gray-400 mb-0.5">เบอร์โทรศัพท์</p>
                   <p className="font-medium text-[#1B2144]">{selectedCamp.contact_phone || "—"}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3">
-                  <p className="text-xs text-gray-400 mb-0.5">ประเภท</p>
+                  <p className="text-xs text-gray-400 mb-0.5">ประเภทค่าย</p>
                   <p className="font-medium text-[#1B2144]">{selectedCamp.type || "—"}</p>
                 </div>
+              </div>
+
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">รายละเอียดกิจกรรม</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-5 text-sm">
                 <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-xs text-gray-400 mb-0.5">วันที่จัดกิจกรรม</p>
                   <p className="font-medium text-[#1B2144]">{formatDate(selectedCamp.event_date)}</p>
                 </div>
                 <div className="bg-gray-50 rounded-xl p-3">
                   <p className="text-xs text-gray-400 mb-0.5">วันปิดรับสมัคร</p>
-                  <p className="font-medium text-[#1B2144]">{selectedCamp.registration_deadline ? formatDate(selectedCamp.registration_deadline) : "—"}</p>
+                  <p className="font-medium text-[#1B2144]">
+                    {selectedCamp.registration_deadline ? formatDate(selectedCamp.registration_deadline) : "—"}
+                  </p>
                 </div>
-                <div className="bg-gray-50 rounded-xl p-3 col-span-2">
-                  <p className="text-xs text-gray-400 mb-0.5">สถานที่</p>
+                <div className="bg-gray-50 rounded-xl p-3 sm:col-span-2">
+                  <p className="text-xs text-gray-400 mb-0.5">สถานที่จัด</p>
                   <p className="font-medium text-[#1B2144]">{selectedCamp.location || "—"}</p>
                 </div>
               </div>
 
               {selectedCamp.description && (
-                <div className="bg-gray-50 rounded-xl p-4 mb-4">
-                  <p className="text-xs text-gray-400 mb-1">รายละเอียด</p>
-                  <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{selectedCamp.description}</p>
-                </div>
+                <>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">คำอธิบายค่าย</p>
+                  <div className="bg-gray-50 rounded-xl p-4 mb-5">
+                    <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">{selectedCamp.description}</p>
+                  </div>
+                </>
               )}
 
-              <div className="flex gap-3 pt-2">
-                <button onClick={() => setSelectedCamp(null)}
-                  className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-gray-50">
-                  ปิด
+              {(selectedCamp.poster_url || selectedCamp.headline_image_url) && (
+                <>
+                  <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">รูปภาพ</p>
+                  <div className="flex gap-3 mb-2">
+                    {selectedCamp.poster_url && (
+                      <div className="flex-1">
+                        <p className="text-xs text-gray-400 mb-1.5">โปสเตอร์</p>
+                        <img src={campImageUrl(selectedCamp.poster_url)!} alt="poster"
+                          className="w-full rounded-xl object-cover border border-gray-100" style={{ maxHeight: "200px" }} />
+                      </div>
+                    )}
+                    {selectedCamp.headline_image_url && (
+                      <div className="flex-1">
+                        <p className="text-xs text-gray-400 mb-1.5">รูปหัวข่าว</p>
+                        <img src={campImageUrl(selectedCamp.headline_image_url)!} alt="headline"
+                          className="w-full rounded-xl object-cover border border-gray-100" style={{ maxHeight: "200px" }} />
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="flex gap-2 sm:gap-3 p-3 sm:p-4 border-t border-gray-100 flex-shrink-0 rounded-b-2xl bg-white">
+              <button onClick={() => setSelectedCamp(null)}
+                className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm text-gray-600 hover:bg-gray-50">
+                ปิด
+              </button>
+              {selectedCamp.status !== "approved" && (
+                <button onClick={() => updateStatus(selectedCamp.id, "approve")} disabled={actionLoading === selectedCamp.id}
+                  className="flex-1 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
+                  {actionLoading === selectedCamp.id ? "..." : "✅ อนุมัติ"}
                 </button>
-                {selectedCamp.status !== "approved" && (
-                  <button onClick={() => updateStatus(selectedCamp.id, "approve")} disabled={actionLoading === selectedCamp.id}
-                    className="flex-1 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-medium hover:bg-emerald-700 disabled:opacity-50">
-                    {actionLoading === selectedCamp.id ? "..." : "✅ อนุมัติ"}
-                  </button>
-                )}
-                {selectedCamp.status !== "rejected" && (
-                  <button onClick={() => updateStatus(selectedCamp.id, "reject")} disabled={actionLoading === selectedCamp.id}
-                    className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 disabled:opacity-50">
-                    {actionLoading === selectedCamp.id ? "..." : "❌ ปฏิเสธ"}
-                  </button>
-                )}
-              </div>
+              )}
+              {selectedCamp.status !== "rejected" && (
+                <button onClick={() => updateStatus(selectedCamp.id, "reject")} disabled={actionLoading === selectedCamp.id}
+                  className="flex-1 py-2.5 bg-red-500 text-white rounded-xl text-sm font-medium hover:bg-red-600 disabled:opacity-50">
+                  {actionLoading === selectedCamp.id ? "..." : "❌ ปฏิเสธ"}
+                </button>
+              )}
             </div>
           </div>
         </div>
